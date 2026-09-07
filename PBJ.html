@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIPBJ Desa — Sistem Informasi Pengadaan Barang/Jasa Desa (15 Berkas Kelengkapan)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="dynamic-page-size">@page { size: A4; margin: 0; }</style>
+<style>
+  :root{
+    --navy-950:#0B1B33;
+    --navy-900:#0F2A4A;
+    --navy-800:#16375E;
+    --navy-700:#1E4574;
+    --gold-600:#B7862C;
+    --gold-500:#C89B3C;
+    --paper:#F5F6F8;
+    --ink:#1C2530;
+    --line:#DCE1E8;
+    --win:#1F7A4D;
+  }
+  html,body{ font-family:'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; background:var(--paper); color:var(--ink); }
+  ::selection{ background:var(--gold-500); color:#fff; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{ background: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 100%); }
+  .nav-item{ position:relative; display:flex; align-items:center; gap:.7rem; padding:.65rem .9rem; border-radius:.55rem; color:#C9D6E8; font-size:.85rem; font-weight:500; transition:background .15s ease, color .15s ease; cursor:pointer; border-left:3px solid transparent; }
+  .nav-item:hover{ background:rgba(255,255,255,.06); color:#fff; }
+  .nav-item.active{ background:rgba(255,255,255,.09); color:#fff; border-left:3px solid var(--gold-500); }
+  .nav-badge{ width:1.55rem; height:1.55rem; min-width:1.55rem; border-radius:.4rem; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; color:#9FB3CC; }
+  .nav-item.active .nav-badge{ background:var(--gold-500); color:var(--navy-950); }
+  .nav-section-label{ font-size:.68rem; letter-spacing:.04em; color:#5F7A9C; }
+
+  /* ---------- Cards / form ---------- */
+  .card{ background:#fff; border:1px solid var(--line); border-radius:.75rem; }
+  .card-head{ padding:1.1rem 1.4rem; border-bottom:1px solid var(--line); }
+  .card-body{ padding:1.4rem; }
+  .field-label{ font-size:.78rem; font-weight:600; color:#43516A; margin-bottom:.3rem; display:block; }
+  .field-hint{ font-size:.72rem; color:#8592A8; margin-top:.25rem; }
+  .input{ width:100%; border:1px solid var(--line); border-radius:.5rem; padding:.55rem .75rem; font-size:.87rem; color:var(--ink); background:#fff; transition:border-color .15s, box-shadow .15s; }
+  .input:focus{ outline:none; border-color:var(--navy-700); box-shadow:0 0 0 3px rgba(30,69,116,.12); }
+  .select{ appearance:none; background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2343516A' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e"); background-repeat:no-repeat; background-position:right .6rem center; background-size:1rem; padding-right:2rem; }
+  .btn{ display:inline-flex; align-items:center; gap:.45rem; font-size:.83rem; font-weight:600; padding:.55rem 1rem; border-radius:.5rem; cursor:pointer; transition:filter .15s, transform .1s; border:1px solid transparent; }
+  .btn:active{ transform:translateY(1px); }
+  .btn-primary{ background:var(--navy-900); color:#fff; }
+  .btn-primary:hover{ filter:brightness(1.15); }
+  .btn-gold{ background:var(--gold-600); color:#fff; }
+  .btn-gold:hover{ filter:brightness(1.08); }
+  .btn-outline{ background:#fff; border-color:var(--line); color:#43516A; }
+  .btn-outline:hover{ background:#F2F4F7; }
+  .btn-danger-ghost{ color:#B4232E; background:transparent; padding:.35rem .5rem; }
+  .btn-danger-ghost:hover{ background:#FDECEC; }
+  .chip{ display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:700; padding:.25rem .6rem; border-radius:999px; }
+  .chip-win{ background:#E7F5EC; color:var(--win); }
+  .chip-lose{ background:#F1F3F6; color:#75839A; }
+
+  table.dtable{ width:100%; border-collapse:collapse; font-size:.85rem; }
+  table.dtable th{ text-align:left; font-size:.72rem; text-transform:uppercase; letter-spacing:.03em; color:#75839A; padding:.55rem .6rem; border-bottom:1px solid var(--line); }
+  table.dtable td{ padding:.5rem .6rem; border-bottom:1px solid #EEF1F5; vertical-align:middle; }
+
+  /* ---------- Printable document paper ---------- */
+  .paper-wrap{ display:flex; flex-direction:column; align-items:center; gap:2rem; padding:2rem 1rem 4rem; }
+  .doc-page{
+    background:#fff; width:210mm; min-height:297mm; box-sizing:border-box;
+    padding:2cm 2.3cm; box-shadow:0 0 0 1px var(--line), 0 18px 40px -18px rgba(15,42,74,.25);
+    font-family:'Times New Roman', Times, serif; color:#111; font-size:12pt; line-height:1.55;
+  }
+  body.paper-f4 .doc-page{ width:215mm; min-height:330mm; }
+  .doc-page h1,.doc-page h2,.doc-page h3{ font-family:'Times New Roman', Times, serif; }
+  .kop{ text-align:center; border-bottom:3px double #111; padding-bottom:.5rem; margin-bottom:1.1rem; display:flex; align-items:center; justify-content:center; gap:.9rem; }
+  .kop-logo{ height:70px; width:70px; object-fit:contain; flex-shrink:0; }
+  .kop-text{ flex:0 1 auto; }
+  .kop .provinsi{ font-size:11.5pt; letter-spacing:.03em; }
+  .kop .kabupaten{ font-size:14pt; font-weight:700; letter-spacing:.02em; }
+  .kop .desa{ font-size:16pt; font-weight:800; letter-spacing:.03em; }
+  .kop .alamat{ font-size:9.5pt; }
+  .doc-title{ text-align:center; font-weight:700; text-decoration:underline; margin:.9rem 0 .3rem; font-size:12.5pt; }
+  .doc-nomor{ text-align:center; font-size:11.5pt; margin-bottom:1rem; }
+  [contenteditable="true"]{ border-bottom:1px dotted #9aa; padding:0 .15rem; cursor:text; }
+  [contenteditable="true"]:focus{ outline:none; background:#FFF7E0; }
+  .sig-box{ text-align:center; font-size:11.5pt; }
+  .sig-name{ font-weight:700; text-decoration:underline; }
+  .editable-hint{ font-size:9pt; color:#B7862C; font-style:italic; }
+
+  /* ---------- Extra doc elements: itemized tables, forms, checklists ---------- */
+  table.rtable{ width:100%; border-collapse:collapse; font-size:11pt; }
+  table.rtable th{ text-align:left; font-weight:700; border:1px solid #111; padding:.3rem .5rem; background:#F1F3F6; font-size:10.5pt; }
+  table.rtable td{ border:1px solid #111; padding:.3rem .5rem; vertical-align:top; }
+  table.rtable td.num, table.rtable th.num{ text-align:center; }
+  table.rtable td.money, table.rtable th.money{ text-align:right; }
+  table.rtable tfoot td{ font-weight:700; border:1px solid #111; padding:.3rem .5rem; }
+  .doc-sub{ font-weight:700; text-decoration:underline; margin:1rem 0 .4rem; font-size:11.5pt; }
+  .chk-row{ display:flex; align-items:flex-start; gap:.5rem; margin:.25rem 0; font-size:11.5pt; }
+  .chk-box{ flex-shrink:0; width:11pt; height:11pt; border:1.3pt solid #111; margin-top:.2rem; }
+  .form-line{ display:grid; grid-template-columns:12rem 1rem 1fr; gap:.15rem; font-size:12pt; margin:.35rem 0; }
+  .form-line > div:first-child{ vertical-align:top; }
+  .attach-item{ margin-left:1.4rem; }
+
+  /* ---------- Dashboard: repeatable row tables (items / rincian) ---------- */
+  .mini-table-wrap{ overflow-x:auto; }
+  .mini-table{ width:100%; border-collapse:collapse; font-size:.82rem; min-width:640px; }
+  .mini-table th{ text-align:left; font-size:.68rem; text-transform:uppercase; letter-spacing:.03em; color:#75839A; padding:.4rem .5rem; border-bottom:1px solid var(--line); white-space:nowrap; }
+  .mini-table td{ padding:.35rem .5rem; border-bottom:1px solid #EEF1F5; vertical-align:middle; }
+  .mini-input{ width:100%; border:1px solid var(--line); border-radius:.4rem; padding:.35rem .5rem; font-size:.8rem; color:var(--ink); background:#fff; }
+  .mini-input:focus{ outline:none; border-color:var(--navy-700); box-shadow:0 0 0 2px rgba(30,69,116,.12); }
+  .total-pill{ display:inline-flex; align-items:center; gap:.4rem; font-size:.78rem; font-weight:700; color:#0F2A4A; background:#EEF2F7; border-radius:.5rem; padding:.4rem .7rem; }
+
+  .hidden{ display:none !important; }
+  .mobile-menu-toggle,.mobile-drawer{ display:none; }
+
+  .mobile-drawer{ position:fixed; inset:0; z-index:50; background:rgba(11,27,51,.68); }
+  .mobile-drawer-panel{ width:min(86vw,20rem); height:100%; background:linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 100%); box-shadow:12px 0 30px -16px rgba(11,27,51,.75); padding:1rem; }
+  .mobile-drawer-head{ display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; }
+  .mobile-drawer-title{ color:#fff; font-size:.95rem; font-weight:700; }
+  .mobile-drawer-close{ border:0; background:transparent; color:var(--gold-500); font-size:1.5rem; line-height:1; cursor:pointer; padding:.25rem; }
+  .mobile-drawer-close:hover,.mobile-drawer-close:focus-visible{ color:#E0B85A; }
+  .mobile-doc-select{ width:100%; color:#fff; background-color:var(--navy-900); border-color:rgba(255,255,255,.2); color-scheme:dark; }
+  .mobile-doc-select:focus{ border-color:var(--gold-500); box-shadow:0 0 0 3px rgba(200,155,60,.2); }
+  .mobile-doc-select option{ color:#fff; background:var(--navy-900); }
+  .mobile-doc-select option:checked{ color:var(--navy-950); background:var(--gold-500); }
+
+  /* ---------- Mobile layout ---------- */
+  @media (max-width: 767px){
+    html,body{ min-width:0; overflow-x:hidden; }
+    body.text-\[15px\]{ font-size:14px; }
+    .flex.h-screen.w-full.overflow-hidden{ display:block; height:100dvh; overflow:hidden; }
+    .sidebar{ display:none !important; }
+    .flex-1.flex.flex-col.h-full.overflow-hidden{ width:100%; max-width:100%; height:100dvh; min-width:0; }
+    header.h-16{ height:auto; min-height:4rem; align-items:flex-start; gap:.75rem; padding:.75rem 1rem; flex-wrap:wrap; }
+    header.h-16 > div:first-child{ min-width:0; flex:1 1 100%; }
+    header.h-16 > div:first-child #topbar-sub{ line-height:1.35; }
+    header.h-16 > div:last-child{ width:100%; justify-content:space-between; gap:.5rem; }
+    header.h-16 > div:last-child > label{ flex:1 1 auto; }
+    header.h-16 .btn{ flex:0 1 auto; padding:.5rem .65rem; font-size:.72rem; white-space:nowrap; }
+    .mobile-menu-toggle{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem; flex:0 0 2.5rem; border:1px solid var(--line); border-radius:.5rem; background:#fff; color:var(--navy-900); font-size:1.35rem; line-height:1; cursor:pointer; }
+    .mobile-drawer.is-open{ display:flex; }
+    #content-scroll{ width:100%; max-width:100%; min-width:0; overflow-x:hidden; }
+    #tab-dashboard{ padding:.9rem !important; }
+    #content-scroll > *, .card, .paper-wrap, .doc-page{ width:100%; max-width:100%; box-sizing:border-box; }
+    .card-head,.card-body{ padding:1rem; }
+    .card-body{ gap:1rem; }
+    .card-body > .md\:col-span-3{ grid-column:1 / -1; }
+    .card-body > .md\:col-span-3 > .flex-1{ min-width:0; }
+    .card-body > .md\:col-span-3 .field-hint{ overflow-wrap:anywhere; }
+    .paper-wrap{ padding:1rem .5rem 2rem; gap:1rem; align-items:stretch; }
+    .doc-page,
+    body.paper-f4 .doc-page{ width:100%; min-height:0; padding:1.25cm .9cm; font-size:10pt; overflow-wrap:anywhere; }
+    .kop{ gap:.5rem; }
+    .kop-logo{ width:48px; height:48px; }
+    .kop .provinsi{ font-size:9pt; }
+    .kop .kabupaten{ font-size:10.5pt; }
+    .kop .desa{ font-size:12pt; }
+    .kop .alamat{ font-size:7.5pt; }
+    .doc-title{ font-size:10.5pt; }
+    .doc-nomor,.sig-box{ font-size:9.5pt; }
+    table.rtable{ font-size:8pt; }
+    table.rtable th{ font-size:7.5pt; }
+    table.rtable th,table.rtable td{ padding:.2rem .25rem; }
+    .form-line{ grid-template-columns:minmax(0, 9rem) .75rem minmax(0, 1fr); font-size:9.5pt; }
+    .chk-row{ font-size:9.5pt; }
+  }
+
+  @media print{
+    .no-print{ display:none !important; }
+    html,body{ background:#fff !important; }
+    #content-scroll{ overflow:visible !important; height:auto !important; }
+    .doc-page{ box-shadow:none !important; margin:0 auto !important; }
+    .paper-wrap{ padding:0 !important; gap:0 !important; }
+    .doc-page + .doc-page{ page-break-before:always; }
+    [contenteditable="true"]{ border-bottom:none !important; }
+    .editable-hint{ display:none !important; }
+    body.print-all .doc-tab.hidden{ display:block !important; }
+    body.print-all .doc-tab + .doc-tab{ page-break-before:always; }
+  }
+</style>
+</head>
+<body class="text-[15px]">
+
+<div class="flex h-screen w-full overflow-hidden">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar no-print w-72 shrink-0 h-full overflow-y-auto flex flex-col">
+    <div class="px-5 pt-6 pb-5 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--gold-500)] to-[var(--gold-600)] flex items-center justify-center shrink-0">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/></svg>
+        </div>
+        <div>
+          <div class="text-white font-extrabold leading-tight tracking-tight text-[15px]">SIPBJ DESA</div>
+          <div class="text-[11px] text-[#9FB3CC] leading-tight">Pengadaan Swakelola Melalui Penyedia</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="nav-item active" data-tab="dashboard" onclick="showTab('dashboard', this)">
+        <span class="nav-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </span>
+        <span>Dashboard Input</span>
+      </div>
+
+      <div class="px-3 pt-4 pb-1 nav-section-label text-[10px] font-bold uppercase">SK &amp; Persiapan</div>
+      <div class="nav-item" data-tab="doc1" onclick="showTab('doc1', this)"><span class="nav-badge">1</span><span>SK Kades — Tim TPK</span></div>
+
+      <div class="px-3 pt-4 pb-1 nav-section-label text-[10px] font-bold uppercase">Proses Penawaran Harga</div>
+      <div class="nav-item" data-tab="doc2" onclick="showTab('doc2', this)"><span class="nav-badge">2</span><span>Surat Penawaran ke Suplier</span></div>
+      <div class="nav-item" data-tab="doc3" onclick="showTab('doc3', this)"><span class="nav-badge">3</span><span>Lampiran Spesifikasi Barang</span></div>
+      <div class="nav-item" data-tab="doc4" onclick="showTab('doc4', this)"><span class="nav-badge">4</span><span>Balasan Penawaran Suplier</span></div>
+      <div class="nav-item" data-tab="doc5" onclick="showTab('doc5', this)"><span class="nav-badge">5</span><span>Rincian Harga Penawaran</span></div>
+      <div class="nav-item" data-tab="doc6" onclick="showTab('doc6', this)"><span class="nav-badge">6</span><span>Formulir Data &amp; Izin Usaha</span></div>
+      <div class="nav-item" data-tab="doc7" onclick="showTab('doc7', this)"><span class="nav-badge">7</span><span>Pakta Integritas Suplier</span></div>
+
+      <div class="px-3 pt-4 pb-1 nav-section-label text-[10px] font-bold uppercase">Klarifikasi &amp; Negosiasi</div>
+      <div class="nav-item" data-tab="doc8" onclick="showTab('doc8', this)"><span class="nav-badge">8</span><span>Undangan Klarifikasi</span></div>
+      <div class="nav-item" data-tab="doc9" onclick="showTab('doc9', this)"><span class="nav-badge">9</span><span>Daftar Hadir Rapat</span></div>
+      <div class="nav-item" data-tab="doc10" onclick="showTab('doc10', this)"><span class="nav-badge">10</span><span>BA Klarifikasi &amp; Negosiasi</span></div>
+
+      <div class="px-3 pt-4 pb-1 nav-section-label text-[10px] font-bold uppercase">Pelaksanaan &amp; Serah Terima</div>
+      <div class="nav-item" data-tab="doc11" onclick="showTab('doc11', this)"><span class="nav-badge">11</span><span>Surat Perintah Kerja (SPK)</span></div>
+      <div class="nav-item" data-tab="doc12" onclick="showTab('doc12', this)"><span class="nav-badge">12</span><span>BA Pemeriksaan Barang</span></div>
+      <div class="nav-item" data-tab="doc13" onclick="showTab('doc13', this)"><span class="nav-badge">13</span><span>Lampiran Rincian Diperiksa</span></div>
+      <div class="nav-item" data-tab="doc14" onclick="showTab('doc14', this)"><span class="nav-badge">14</span><span>BAST Barang dari Suplier</span></div>
+      <div class="nav-item" data-tab="doc15" onclick="showTab('doc15', this)"><span class="nav-badge">15</span><span>BAST Pekerjaan ke Kades</span></div>
+    </nav>
+
+    <div class="px-4 py-4 border-t border-white/10">
+      <div class="text-[10px] leading-relaxed text-[#8FA3BE]">
+        Landasan hukum: Peraturan LKPP No. 12 Tahun 2019 &amp; Perbup Lampung Timur No. 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa.
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 flex flex-col h-full overflow-hidden">
+
+    <!-- Topbar -->
+    <header class="no-print h-16 shrink-0 bg-white border-b border-[var(--line)] flex items-center justify-between px-6">
+      <div>
+        <button type="button" class="mobile-menu-toggle" aria-label="Buka navigasi dokumen" aria-expanded="false" onclick="toggleMobileMenu()">☰</button>
+        <div id="topbar-title" class="font-bold text-[15px] text-[#0F2A4A]">Dashboard Input Data</div>
+        <div id="topbar-sub" class="text-[12px] text-[#8592A8]">Lengkapi seluruh data untuk membangkitkan 15 berkas kelengkapan PBJ Desa secara otomatis</div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div id="winner-chip-topbar" class="hidden chip chip-win"></div>
+        <label class="flex items-center gap-2 text-[12px] text-[#43516A] font-medium">
+          Kertas:
+          <select id="paper-size-select" class="select input !py-1.5 !text-[12px] !w-24" onchange="setPaperSize(this.value)">
+            <option value="A4">A4</option>
+            <option value="F4">F4 / Folio</option>
+          </select>
+        </label>
+        <button class="btn btn-outline" onclick="printAllDocuments()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Cetak Semua (15 Berkas)
+        </button>
+      </div>
+    </header>
+
+    <div id="mobile-drawer" class="mobile-drawer no-print" aria-hidden="true" onclick="closeMobileMenu(event)">
+      <div class="mobile-drawer-panel" role="dialog" aria-modal="true" aria-label="Navigasi dokumen" onclick="event.stopPropagation()">
+        <div class="mobile-drawer-head">
+          <div class="mobile-drawer-title">Pilih Dokumen</div>
+          <button type="button" class="mobile-drawer-close" aria-label="Tutup navigasi" onclick="toggleMobileMenu(false)">&times;</button>
+        </div>
+        <select id="mobile-doc-select" class="input mobile-doc-select" aria-label="Pilih dokumen" onchange="selectMobileDocument(this.value)">
+          <option value="dashboard">Dashboard Input</option>
+          <option value="doc1">1. SK Kades - Tim TPK</option>
+          <option value="doc2">2. Surat Penawaran ke Suplier</option>
+          <option value="doc3">3. Lampiran Spesifikasi Barang</option>
+          <option value="doc4">4. Balasan Penawaran Suplier</option>
+          <option value="doc5">5. Rincian Harga Penawaran</option>
+          <option value="doc6">6. Formulir Data &amp; Izin Usaha</option>
+          <option value="doc7">7. Pakta Integritas Suplier</option>
+          <option value="doc8">8. Undangan Klarifikasi</option>
+          <option value="doc9">9. Daftar Hadir Rapat</option>
+          <option value="doc10">10. BA Klarifikasi &amp; Negosiasi</option>
+          <option value="doc11">11. Surat Perintah Kerja (SPK)</option>
+          <option value="doc12">12. BA Pemeriksaan Barang</option>
+          <option value="doc13">13. Lampiran Rincian Diperiksa</option>
+          <option value="doc14">14. BAST Barang dari Suplier</option>
+          <option value="doc15">15. BA Penyerahan ke Kades</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="content-scroll" class="flex-1 overflow-y-auto">
+
+      <!-- =================================================== -->
+      <!-- DASHBOARD TAB                                        -->
+      <!-- =================================================== -->
+      <div id="tab-dashboard" class="tab-panel no-print p-6 max-w-6xl mx-auto space-y-6">
+
+        <!-- Legal basis strip -->
+        <div class="rounded-xl border border-[#E7DCC0] bg-[#FBF6E9] px-4 py-3 flex items-start gap-3">
+          <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B7862C" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <p class="text-[12.5px] text-[#6B5A2E] leading-relaxed">
+            Aplikasi ini menyusun dokumen berdasarkan <b>Peraturan LKPP Nomor 12 Tahun 2019</b> tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa, dan <b>Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022</b> tentang Tata Cara Pengadaan Barang/Jasa di Desa. Nomor surat, tanggal, dan dasar hukum pada tiap dokumen dapat disunting langsung (klik teks bergaris titik‑titik) agar sesuai kebutuhan dan regulasi terbaru di desa Anda.
+          </p>
+        </div>
+
+        <!-- Card: Data Desa & Kegiatan -->
+        <section class="card">
+          <div class="card-head flex items-center gap-2">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+            <h3 class="font-bold text-[14.5px] text-[#0F2A4A]">Data Desa &amp; Kegiatan Pengadaan</h3>
+          </div>
+          <div class="card-body grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-3 rounded-lg border border-dashed border-[var(--line)] p-4 flex items-center gap-4 flex-wrap">
+              <div class="w-[72px] h-[72px] rounded-lg border border-[var(--line)] bg-[#F7F8FA] flex items-center justify-center overflow-hidden shrink-0">
+                <img id="logo-preview" src="" alt="Logo Kabupaten" class="hidden w-full h-full object-contain">
+                <svg id="logo-preview-placeholder" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B7C0CE" stroke-width="1.8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+              </div>
+              <div class="flex-1 min-w-[220px]">
+                <div class="font-bold text-[13px] text-[#0F2A4A]">Logo Kabupaten Lampung Timur</div>
+                <p class="field-hint">Unggah berkas logo/lambang resmi (PNG/JPG/SVG, disarankan latar belakang transparan). Logo akan tampil otomatis di kop surat seluruh dokumen. Berkas diproses di perangkat ini saja dan perlu diunggah ulang jika halaman dimuat kembali.</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <label class="btn btn-outline cursor-pointer">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Unggah Logo
+                  <input id="logo-file-input" type="file" accept="image/*" class="hidden" onchange="handleLogoUpload(this)">
+                </label>
+                <button id="logo-remove-btn" type="button" class="btn btn-outline hidden !text-[#B4232E] !border-[#F3C6C9]" onclick="removeLogo()">Hapus</button>
+              </div>
+            </div>
+            <div>
+              <label class="field-label">Nama Desa</label>
+              <input type="text" class="input" placeholder="cth. Desa Sumber Rejo" data-model="desa.nama_desa">
+            </div>
+            <div>
+              <label class="field-label">Kecamatan</label>
+              <input type="text" class="input" placeholder="cth. Batanghari" data-model="desa.kecamatan">
+            </div>
+            <div>
+              <label class="field-label">Kabupaten</label>
+              <input type="text" class="input" value="Lampung Timur" data-model="desa.kabupaten">
+            </div>
+            <div>
+              <label class="field-label">Provinsi</label>
+              <input type="text" class="input" value="Lampung" data-model="desa.provinsi">
+            </div>
+            <div>
+              <label class="field-label">Tahun Anggaran</label>
+              <input type="number" class="input" data-model="desa.tahun">
+            </div>
+            <div>
+              <label class="field-label">Sumber Dana</label>
+              <input type="text" class="input" value="Dana Desa" data-model="desa.sumber_dana">
+            </div>
+            <div class="md:col-span-2">
+              <label class="field-label">Nama Kegiatan / Pekerjaan</label>
+              <input type="text" class="input" placeholder="cth. Pengadaan Material Rabat Beton Jalan Dusun II" data-model="desa.nama_kegiatan">
+            </div>
+            <div>
+              <label class="field-label">Volume / Satuan</label>
+              <input type="text" class="input" placeholder="cth. 1 Paket" data-model="desa.volume">
+            </div>
+            <div class="md:col-span-2">
+              <label class="field-label">Uraian Barang/Jasa yang Diadakan</label>
+              <textarea class="input" rows="2" placeholder="cth. Pengadaan material bangunan (semen, pasir, besi) untuk kegiatan rabat beton jalan dusun" data-model="desa.uraian"></textarea>
+            </div>
+            <div>
+              <label class="field-label">Pagu Anggaran / HPS (Rp)</label>
+              <input type="text" inputmode="numeric" class="input currency-input" placeholder="0" data-model="desa.pagu">
+              <p class="field-hint">Opsional — untuk pernyataan kewajaran harga pada Berita Acara Klarifikasi &amp; Negosiasi (Berkas 10)</p>
+            </div>
+            <div>
+              <label class="field-label">Jangka Waktu Pelaksanaan (hari kalender)</label>
+              <input type="number" class="input" placeholder="cth. 14" data-model="desa.jangka_waktu">
+            </div>
+            <div>
+              <label class="field-label">Nama Kepala Desa</label>
+              <input type="text" class="input" placeholder="cth. Sutrisno" data-model="desa.nama_kades">
+            </div>
+          </div>
+        </section>
+
+        <!-- Card: TPK -->
+        <section class="card">
+          <div class="card-head flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <h3 class="font-bold text-[14.5px] text-[#0F2A4A]">Tim Pengelola Kegiatan (TPK)</h3>
+            </div>
+            <button class="btn btn-outline !py-1.5 !text-[12px]" onclick="addTpkRow()">+ Tambah Anggota</button>
+          </div>
+          <div class="card-body">
+            <table class="dtable">
+              <thead><tr><th style="width:3rem;">No</th><th>Nama Lengkap</th><th style="width:12rem;">Jabatan dalam TPK</th><th style="width:3rem;"></th></tr></thead>
+              <tbody id="tpk-tbody"></tbody>
+            </table>
+            <p class="field-hint mt-2">Baris pertama dengan jabatan "Ketua" akan otomatis menjadi penanda tangan utama pada SPK dan Berita Acara Serah Terima.</p>
+          </div>
+        </section>
+
+        <!-- Card: Daftar Spesifikasi Barang/Jasa (dipakai pada Lampiran Surat Penawaran) -->
+        <section class="card">
+          <div class="card-head flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <h3 class="font-bold text-[14.5px] text-[#0F2A4A]">Daftar Spesifikasi Barang/Jasa yang Diminta</h3>
+            </div>
+            <button class="btn btn-outline !py-1.5 !text-[12px]" onclick="addItemRow()">+ Tambah Item</button>
+          </div>
+          <div class="card-body">
+            <div class="mini-table-wrap">
+              <table class="mini-table">
+                <thead><tr><th style="width:2.2rem;">No</th><th>Nama Barang/Jasa</th><th>Spesifikasi Teknis / Merek</th><th style="width:9rem;">Volume/Satuan</th><th style="width:2.5rem;"></th></tr></thead>
+                <tbody id="item-tbody"></tbody>
+              </table>
+            </div>
+            <p class="field-hint mt-2">Daftar ini menjadi dasar Lampiran Surat Penawaran (Berkas 3) yang dikirim ke kedua calon penyedia. Boleh dikosongkan jika uraian ringkas pada kolom "Uraian Barang/Jasa" di atas sudah dianggap cukup.</p>
+          </div>
+        </section>
+
+        <!-- Card: Supplier A & B -->
+        <section class="card">
+          <div class="card-head flex items-center gap-2">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2"><path d="M3 3h18v4H3z"/><path d="M5 7v13h14V7"/><path d="M9 21V12h6v9"/></svg>
+            <h3 class="font-bold text-[14.5px] text-[#0F2A4A]">Data Calon Penyedia Barang/Jasa</h3>
+          </div>
+          <div class="card-body grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div class="rounded-lg border border-[var(--line)] p-4" style="border-left:4px solid #1E4574;">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-[13px] text-[#1E4574]">CALON PENYEDIA A</span>
+                <span id="badge-a" class="chip chip-lose">Menunggu Data</span>
+              </div>
+              <div class="space-y-3">
+                <div><label class="field-label">Nama Toko / Penyedia</label><input type="text" class="input" data-model="supplierA.nama_toko"></div>
+                <div><label class="field-label">Nama Pemilik</label><input type="text" class="input" data-model="supplierA.nama_pemilik"></div>
+                <div><label class="field-label">Alamat</label><input type="text" class="input" data-model="supplierA.alamat"></div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div><label class="field-label">No. HP/Telepon</label><input type="text" class="input" data-model="supplierA.no_hp"></div>
+                  <div><label class="field-label">Bidang/Jenis Usaha</label><input type="text" class="input" placeholder="cth. Toko Bangunan" data-model="supplierA.bidang_usaha"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div><label class="field-label">No. Izin Usaha / NIB</label><input type="text" class="input" data-model="supplierA.no_izin_usaha"></div>
+                  <div><label class="field-label">NPWP (jika ada)</label><input type="text" class="input" data-model="supplierA.npwp"></div>
+                </div>
+                <div>
+                  <label class="field-label">Total Nilai Penawaran (Rp)</label>
+                  <input type="text" inputmode="numeric" class="input currency-input" placeholder="0" data-model="supplierA.total">
+                  <p class="field-hint">Terisi otomatis dari Rincian Harga di bawah jika diisi.</p>
+                </div>
+                <div class="border-t border-dashed border-[var(--line)] pt-3">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="field-label !mb-0">Rincian Harga Penawaran (opsional)</span>
+                    <button type="button" class="btn btn-outline !py-1 !px-2 !text-[11px]" onclick="addRincianRow('A')">+ Item</button>
+                  </div>
+                  <div class="mini-table-wrap">
+                    <table class="mini-table">
+                      <thead><tr><th style="width:2rem;">No</th><th>Nama Barang</th><th style="width:6rem;">Volume</th><th style="width:7rem;">Harga Satuan</th><th style="width:7rem;">Jumlah</th><th style="width:2rem;"></th></tr></thead>
+                      <tbody id="rincian-tbody-A"></tbody>
+                    </table>
+                  </div>
+                  <div class="mt-2 text-right"><span id="rincian-total-A" class="total-pill">Total Rincian: Rp 0</span></div>
+                  <p class="field-hint mt-1">Menjadi Lampiran Daftar Rincian Penawaran Harga (Berkas 5). Jika calon ini terpilih sebagai pemenang, daftar ini otomatis dipakai pada Lampiran Rincian Barang yang Diperiksa (Berkas 13).</p>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-lg border border-[var(--line)] p-4" style="border-left:4px solid #6B7A93;">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-[13px] text-[#43516A]">CALON PENYEDIA B</span>
+                <span id="badge-b" class="chip chip-lose">Menunggu Data</span>
+              </div>
+              <div class="space-y-3">
+                <div><label class="field-label">Nama Toko / Penyedia</label><input type="text" class="input" data-model="supplierB.nama_toko"></div>
+                <div><label class="field-label">Nama Pemilik</label><input type="text" class="input" data-model="supplierB.nama_pemilik"></div>
+                <div><label class="field-label">Alamat</label><input type="text" class="input" data-model="supplierB.alamat"></div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div><label class="field-label">No. HP/Telepon</label><input type="text" class="input" data-model="supplierB.no_hp"></div>
+                  <div><label class="field-label">Bidang/Jenis Usaha</label><input type="text" class="input" placeholder="cth. Toko Bangunan" data-model="supplierB.bidang_usaha"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div><label class="field-label">No. Izin Usaha / NIB</label><input type="text" class="input" data-model="supplierB.no_izin_usaha"></div>
+                  <div><label class="field-label">NPWP (jika ada)</label><input type="text" class="input" data-model="supplierB.npwp"></div>
+                </div>
+                <div>
+                  <label class="field-label">Total Nilai Penawaran (Rp)</label>
+                  <input type="text" inputmode="numeric" class="input currency-input" placeholder="0" data-model="supplierB.total">
+                  <p class="field-hint">Terisi otomatis dari Rincian Harga di bawah jika diisi.</p>
+                </div>
+                <div class="border-t border-dashed border-[var(--line)] pt-3">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="field-label !mb-0">Rincian Harga Penawaran (opsional)</span>
+                    <button type="button" class="btn btn-outline !py-1 !px-2 !text-[11px]" onclick="addRincianRow('B')">+ Item</button>
+                  </div>
+                  <div class="mini-table-wrap">
+                    <table class="mini-table">
+                      <thead><tr><th style="width:2rem;">No</th><th>Nama Barang</th><th style="width:6rem;">Volume</th><th style="width:7rem;">Harga Satuan</th><th style="width:7rem;">Jumlah</th><th style="width:2rem;"></th></tr></thead>
+                      <tbody id="rincian-tbody-B"></tbody>
+                    </table>
+                  </div>
+                  <div class="mt-2 text-right"><span id="rincian-total-B" class="total-pill">Total Rincian: Rp 0</span></div>
+                  <p class="field-hint mt-1">Menjadi Lampiran Daftar Rincian Penawaran Harga (Berkas 5). Jika calon ini terpilih sebagai pemenang, daftar ini otomatis dipakai pada Lampiran Rincian Barang yang Diperiksa (Berkas 13).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Card: Hasil Evaluasi Otomatis -->
+        <section class="card">
+          <div class="card-head flex items-center gap-2">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F2A4A" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            <h3 class="font-bold text-[14.5px] text-[#0F2A4A]">Hasil Evaluasi Otomatis</h3>
+          </div>
+          <div class="card-body">
+            <table class="dtable mb-4">
+              <thead><tr><th>Uraian</th><th>Calon Penyedia A</th><th>Calon Penyedia B</th></tr></thead>
+              <tbody id="dash-comparison-body"></tbody>
+            </table>
+            <div id="winner-banner" class="rounded-lg border border-dashed border-[var(--line)] px-4 py-3 text-[13px] text-[#8592A8] text-center">
+              Lengkapi total nilai penawaran kedua calon penyedia untuk melihat penetapan pemenang secara otomatis.
+            </div>
+            <div class="mt-4 max-w-sm">
+              <label class="field-label">Nilai Kesepakatan Setelah Negosiasi (Rp)</label>
+              <input type="text" inputmode="numeric" class="input currency-input" placeholder="Kosongkan jika sama dengan nilai penawaran pemenang" data-model="nego.nilai">
+              <p class="field-hint">Opsional — digunakan pada BA Klarifikasi &amp; Negosiasi, SPK, dan BAST. Jika dikosongkan, sistem memakai nilai penawaran pemenang.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- =================================================== -->
+      <!-- DOCUMENT TABS (1-15)                                 -->
+      <!-- =================================================== -->
+      <!-- 1. SK KEPALA DESA — TIM PENGELOLA KEGIATAN (TPK)     -->
+      <!-- =================================================== -->
+      <div id="tab-doc1" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">1. SK Kepala Desa — Tim Pengelola Kegiatan (TPK)</h2>
+            <p class="text-[12px] text-[#8592A8]">Dasar hukum pembentukan TPK Barang/Jasa Desa</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Pemerintah Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">KEPUTUSAN KEPALA DESA <span data-bind="desa.nama_desa_upper"></span></div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc1-nomor">001/KPTS/2026</span></div>
+            <div style="text-align:center; font-weight:700; margin:.6rem 0 .2rem;">TENTANG</div>
+            <div style="text-align:center; font-weight:700; margin-bottom:1rem;">
+              PEMBENTUKAN TIM PENGELOLA KEGIATAN (TPK) PENGADAAN BARANG/JASA<br>
+              DESA <span data-bind="desa.nama_desa_upper"></span> TAHUN ANGGARAN <span data-bind="desa.tahun"></span>
+            </div>
+
+            <p style="text-align:center; font-weight:700; text-decoration:underline; margin-bottom:.8rem;">KEPALA DESA <span data-bind="desa.nama_desa_upper"></span>,</p>
+
+            <table style="width:100%; font-size:12pt;">
+              <tr><td style="width:6.2rem; vertical-align:top;">Menimbang</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;">
+                <p style="margin:0 0 .4rem;">a. bahwa untuk kelancaran dan tertib administrasi pelaksanaan pengadaan barang/jasa yang dibiayai dari <span data-bind="desa.sumber_dana"></span> Desa <span data-bind="desa.nama_desa"></span>, perlu dibentuk Tim Pengelola Kegiatan (TPK) Pengadaan Barang/Jasa Desa;</p>
+                <p style="margin:0;">b. bahwa berdasarkan pertimbangan sebagaimana dimaksud pada huruf a, perlu menetapkan Keputusan Kepala Desa tentang Pembentukan Tim Pengelola Kegiatan (TPK) Pengadaan Barang/Jasa Desa <span data-bind="desa.nama_desa"></span> Tahun Anggaran <span data-bind="desa.tahun"></span>;</p>
+              </td></tr>
+            </table>
+
+            <table style="width:100%; font-size:12pt; margin-top:.6rem;">
+              <tr><td style="width:6.2rem; vertical-align:top;">Mengingat</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;">
+                <p style="margin:0 0 .3rem;" contenteditable="true">1. Peraturan Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah Nomor 12 Tahun 2019 tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa;</p>
+                <p style="margin:0 0 .3rem;" contenteditable="true">2. Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa;</p>
+                <p style="margin:0;">3. Peraturan Desa <span data-bind="desa.nama_desa"></span> tentang Anggaran Pendapatan dan Belanja Desa (APBDes) Tahun Anggaran <span data-bind="desa.tahun"></span>;</p>
+              </td></tr>
+            </table>
+
+            <p style="text-align:center; font-weight:700; margin:1.1rem 0 .6rem;">MEMUTUSKAN:</p>
+
+            <table style="width:100%; font-size:12pt;">
+              <tr><td style="width:6.2rem; vertical-align:top;">Menetapkan</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top; font-weight:700;">KEPUTUSAN KEPALA DESA TENTANG PEMBENTUKAN TIM PENGELOLA KEGIATAN (TPK) PENGADAAN BARANG/JASA DESA <span data-bind="desa.nama_desa_upper"></span> TAHUN ANGGARAN <span data-bind="desa.tahun"></span>.</td></tr>
+            </table>
+
+            <table style="width:100%; font-size:12pt; margin-top:.7rem;">
+              <tr><td style="width:6.2rem; vertical-align:top;">KESATU</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;">Membentuk dan menetapkan Tim Pengelola Kegiatan (TPK) Pengadaan Barang/Jasa Desa <span data-bind="desa.nama_desa"></span> Tahun Anggaran <span data-bind="desa.tahun"></span> dengan susunan keanggotaan sebagai berikut:</td></tr>
+            </table>
+
+            <table class="rtable" style="margin:.6rem 0 1rem;">
+              <thead><tr><th class="num" style="width:2.5rem;">No</th><th>Nama</th><th style="width:11rem;">Kedudukan dalam TPK</th></tr></thead>
+              <tbody id="sk-tpk-tbody"></tbody>
+            </table>
+
+            <table style="width:100%; font-size:12pt;">
+              <tr><td style="width:6.2rem; vertical-align:top;">KEDUA</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top; text-align:justify;">Tim Pengelola Kegiatan (TPK) sebagaimana dimaksud dalam Diktum KESATU mempunyai tugas sebagai berikut:
+                <p style="margin:.3rem 0 0;">a. menyusun rencana dan jadwal pelaksanaan pengadaan barang/jasa;</p>
+                <p style="margin:.15rem 0 0;">b. melaksanakan survei harga pasar dan menyusun rincian anggaran biaya;</p>
+                <p style="margin:.15rem 0 0;">c. melaksanakan proses pengadaan barang/jasa melalui penyedia sesuai ketentuan yang berlaku;</p>
+                <p style="margin:.15rem 0 0;">d. melaksanakan pemeriksaan, penerimaan, dan serah terima hasil pengadaan barang/jasa; dan</p>
+                <p style="margin:.15rem 0 0;">e. melaporkan pelaksanaan tugas kepada Kepala Desa.</p>
+              </td></tr>
+            </table>
+
+            <table style="width:100%; font-size:12pt; margin-top:.7rem;">
+              <tr><td style="width:6.2rem; vertical-align:top;">KETIGA</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;">Segala biaya yang timbul akibat ditetapkannya Keputusan ini dibebankan pada <span data-bind="desa.sumber_dana"></span> Desa <span data-bind="desa.nama_desa"></span> Tahun Anggaran <span data-bind="desa.tahun"></span>.</td></tr>
+            </table>
+
+            <table style="width:100%; font-size:12pt; margin-top:.7rem; margin-bottom:1.2rem;">
+              <tr><td style="width:6.2rem; vertical-align:top;">KEEMPAT</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;">Keputusan ini mulai berlaku sejak tanggal ditetapkan, dengan ketentuan apabila di kemudian hari terdapat kekeliruan dalam Keputusan ini akan diadakan perbaikan sebagaimana mestinya.</td></tr>
+            </table>
+
+            <table style="width:100%; margin-top:.5rem;"><tr><td style="width:55%;"></td><td style="text-align:center; vertical-align:top;">
+              Ditetapkan di <span data-bind="desa.nama_desa"></span><br>
+              pada tanggal <span contenteditable="true" data-default-doc="doc1-tanggal">.....................</span><br><br>
+              KEPALA DESA <span data-bind="desa.nama_desa_upper"></span>,<br><br><br><br>
+              <span class="sig-name" data-bind="desa.nama_kades"></span>
+            </td></tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 2. SURAT PENAWARAN (PERMINTAAN PENAWARAN HARGA)      -->
+      <!-- =================================================== -->
+      <div id="tab-doc2" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">2. Surat Penawaran dari TPK kepada Suplier</h2>
+            <p class="text-[12px] text-[#8592A8]">Surat permintaan penawaran harga, dikirim kepada 2 (dua) calon penyedia</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Untuk Calon Penyedia A -->
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Sekretariat Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <table style="width:100%; font-size:12pt; margin-bottom:1rem;">
+              <tr><td style="width:5.5rem; vertical-align:top;">Nomor</td><td style="width:1rem; vertical-align:top;">:</td><td><span contenteditable="true" data-default-doc="doc2a-nomor">002/SPPH-A/TPK/2026</span></td>
+                  <td style="width:6.5rem; vertical-align:top; text-align:right;">&nbsp;</td><td style="text-align:right; vertical-align:top;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc2a-tanggal">.....................</span></td></tr>
+              <tr><td style="vertical-align:top;">Lampiran</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">1 (satu) berkas rincian spesifikasi</td><td></td><td></td></tr>
+              <tr><td style="vertical-align:top;">Perihal</td><td style="vertical-align:top;">:</td><td style="vertical-align:top; font-weight:700;">Penawaran/Permintaan Penawaran Harga</td><td></td><td></td></tr>
+            </table>
+
+            <p>Kepada Yth.<br>
+            <span data-bind="supplierA.nama_pemilik">.....................</span><br>
+            <span data-bind="supplierA.nama_toko">.....................</span><br>
+            di <span data-bind="supplierA.alamat">.....................</span></p>
+
+            <p>Dengan hormat,</p>
+            <p style="text-align:justify;">Sehubungan dengan pelaksanaan kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b> yang dibiayai dari <span data-bind="desa.sumber_dana"></span> Desa <span data-bind="desa.nama_desa"></span>, dengan ini Tim Pengelola Kegiatan (TPK) mengundang Saudara untuk mengajukan penawaran harga atas pengadaan barang/jasa dengan rincian sebagai berikut:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:11rem; vertical-align:top;">Uraian Barang/Jasa</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;" data-bind="desa.uraian"></td></tr>
+              <tr><td style="vertical-align:top;">Volume/Satuan</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;" data-bind="desa.volume"></td></tr>
+              <tr><td style="vertical-align:top;">Lokasi Pekerjaan</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">Desa <span data-bind="desa.nama_desa"></span>, Kecamatan <span data-bind="desa.kecamatan"></span></td></tr>
+            </table>
+
+            <p style="text-align:justify;">Rincian spesifikasi teknis dan/atau daftar jenis barang/jasa selengkapnya sebagaimana tercantum dalam Lampiran surat ini. Penawaran harga agar disampaikan secara tertulis kepada Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span> paling lambat pada <span contenteditable="true" data-default-doc="doc2a-batas">.....................</span>, disertai formulir data suplier dan pakta integritas, dengan mencantumkan rincian harga secara jelas dan wajar sesuai kondisi pasar setempat.</p>
+
+            <p style="text-align:justify;">Proses pengadaan ini dilaksanakan berdasarkan <span contenteditable="true">Peraturan LKPP Nomor 12 Tahun 2019 tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa dan Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa</span>.</p>
+
+            <p style="text-align:justify;">Demikian surat penawaran ini kami sampaikan. Atas perhatian dan kerja sama Saudara, kami ucapkan terima kasih.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br><br><br><br>
+                <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+              </div>
+            </td></tr></table>
+          </div>
+
+          <!-- Untuk Calon Penyedia B -->
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Sekretariat Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <table style="width:100%; font-size:12pt; margin-bottom:1rem;">
+              <tr><td style="width:5.5rem; vertical-align:top;">Nomor</td><td style="width:1rem; vertical-align:top;">:</td><td><span contenteditable="true" data-default-doc="doc2b-nomor">003/SPPH-B/TPK/2026</span></td>
+                  <td style="width:6.5rem; vertical-align:top; text-align:right;">&nbsp;</td><td style="text-align:right; vertical-align:top;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc2b-tanggal">.....................</span></td></tr>
+              <tr><td style="vertical-align:top;">Lampiran</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">1 (satu) berkas rincian spesifikasi</td><td></td><td></td></tr>
+              <tr><td style="vertical-align:top;">Perihal</td><td style="vertical-align:top;">:</td><td style="vertical-align:top; font-weight:700;">Penawaran/Permintaan Penawaran Harga</td><td></td><td></td></tr>
+            </table>
+
+            <p>Kepada Yth.<br>
+            <span data-bind="supplierB.nama_pemilik">.....................</span><br>
+            <span data-bind="supplierB.nama_toko">.....................</span><br>
+            di <span data-bind="supplierB.alamat">.....................</span></p>
+
+            <p>Dengan hormat,</p>
+            <p style="text-align:justify;">Sehubungan dengan pelaksanaan kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b> yang dibiayai dari <span data-bind="desa.sumber_dana"></span> Desa <span data-bind="desa.nama_desa"></span>, dengan ini Tim Pengelola Kegiatan (TPK) mengundang Saudara untuk mengajukan penawaran harga atas pengadaan barang/jasa dengan rincian sebagai berikut:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:11rem; vertical-align:top;">Uraian Barang/Jasa</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;" data-bind="desa.uraian"></td></tr>
+              <tr><td style="vertical-align:top;">Volume/Satuan</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;" data-bind="desa.volume"></td></tr>
+              <tr><td style="vertical-align:top;">Lokasi Pekerjaan</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">Desa <span data-bind="desa.nama_desa"></span>, Kecamatan <span data-bind="desa.kecamatan"></span></td></tr>
+            </table>
+
+            <p style="text-align:justify;">Rincian spesifikasi teknis dan/atau daftar jenis barang/jasa selengkapnya sebagaimana tercantum dalam Lampiran surat ini. Penawaran harga agar disampaikan secara tertulis kepada Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span> paling lambat pada <span contenteditable="true" data-default-doc="doc2b-batas">.....................</span>, disertai formulir data suplier dan pakta integritas, dengan mencantumkan rincian harga secara jelas dan wajar sesuai kondisi pasar setempat.</p>
+
+            <p style="text-align:justify;">Proses pengadaan ini dilaksanakan berdasarkan <span contenteditable="true">Peraturan LKPP Nomor 12 Tahun 2019 tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa dan Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa</span>.</p>
+
+            <p style="text-align:justify;">Demikian surat penawaran ini kami sampaikan. Atas perhatian dan kerja sama Saudara, kami ucapkan terima kasih.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br><br><br><br>
+                <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+              </div>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 3. LAMPIRAN SURAT PENAWARAN — SPESIFIKASI BARANG     -->
+      <!-- =================================================== -->
+      <div id="tab-doc3" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">3. Lampiran Surat Penawaran TPK</h2>
+            <p class="text-[12px] text-[#8592A8]">Rincian spesifikasi barang/jasa yang dicari — lampiran Berkas 2</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Untuk Calon Penyedia A -->
+          <div class="doc-page">
+            <p style="text-align:right; margin-bottom:0;">Lampiran Surat Nomor: <span contenteditable="true" data-default-doc="doc3a-ref">002/SPPH-A/TPK/2026</span></p>
+            <div class="doc-title" style="margin-top:.3rem;">DAFTAR SPESIFIKASI BARANG/JASA YANG DIMINTA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Untuk: <span data-bind="supplierA.nama_toko"></span></div>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama Barang/Jasa</th><th>Spesifikasi Teknis / Merek</th><th style="width:7rem;">Volume/Satuan</th></tr></thead>
+              <tbody id="lampiran-spek-tbody-A"></tbody>
+            </table>
+
+            <p style="text-align:justify; margin-top:1rem;">Calon penyedia diharapkan menyampaikan penawaran harga sesuai dengan spesifikasi teknis tersebut di atas. Apabila terdapat barang yang tidak tersedia sesuai spesifikasi, calon penyedia agar mencantumkan spesifikasi pengganti yang sepadan disertai keterangan.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br><br><br><br>
+                <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+              </div>
+            </td></tr></table>
+          </div>
+
+          <!-- Untuk Calon Penyedia B -->
+          <div class="doc-page">
+            <p style="text-align:right; margin-bottom:0;">Lampiran Surat Nomor: <span contenteditable="true" data-default-doc="doc3b-ref">003/SPPH-B/TPK/2026</span></p>
+            <div class="doc-title" style="margin-top:.3rem;">DAFTAR SPESIFIKASI BARANG/JASA YANG DIMINTA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Untuk: <span data-bind="supplierB.nama_toko"></span></div>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama Barang/Jasa</th><th>Spesifikasi Teknis / Merek</th><th style="width:7rem;">Volume/Satuan</th></tr></thead>
+              <tbody id="lampiran-spek-tbody-B"></tbody>
+            </table>
+
+            <p style="text-align:justify; margin-top:1rem;">Calon penyedia diharapkan menyampaikan penawaran harga sesuai dengan spesifikasi teknis tersebut di atas. Apabila terdapat barang yang tidak tersedia sesuai spesifikasi, calon penyedia agar mencantumkan spesifikasi pengganti yang sepadan disertai keterangan.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br><br><br><br>
+                <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+              </div>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 4. SURAT BALASAN PENAWARAN DARI SUPLIER              -->
+      <!-- =================================================== -->
+      <div id="tab-doc4" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">4. Surat Balasan Penawaran dari Suplier</h2>
+            <p class="text-[12px] text-[#8592A8]">Diterbitkan oleh masing-masing calon penyedia untuk TPK</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Penawaran dari Supplier A -->
+          <div class="doc-page">
+            <table style="width:100%; font-size:12pt; margin-bottom:.4rem;"><tr>
+              <td style="font-weight:800; font-size:13.5pt;" data-bind="supplierA.nama_toko"></td>
+              <td style="text-align:right; vertical-align:top;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc4a-tanggal">.....................</span></td>
+            </tr></table>
+            <p style="margin-top:-.3rem; font-size:11pt;" data-bind="supplierA.alamat"></p>
+            <hr style="border:none; border-top:1px solid #111; margin:.6rem 0 1rem;">
+
+            <table style="width:100%; font-size:12pt; margin-bottom:1rem;">
+              <tr><td style="width:5.5rem; vertical-align:top;">Nomor</td><td style="width:1rem;">:</td><td><span contenteditable="true" data-default-doc="doc4a-nomor">-</span></td></tr>
+              <tr><td style="vertical-align:top;">Lampiran</td><td>:</td><td>1 (satu) berkas rincian harga</td></tr>
+              <tr><td style="vertical-align:top;">Perihal</td><td>:</td><td style="font-weight:700;">Balasan Penawaran Harga</td></tr>
+            </table>
+
+            <p>Kepada Yth.<br>Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br>di Tempat</p>
+
+            <p>Dengan hormat,</p>
+            <p style="text-align:justify;">Menunjuk surat penawaran/permintaan penawaran harga dari Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span> Nomor <span contenteditable="true" data-default-doc="doc4a-ref-nomor">002/SPPH-A/TPK/2026</span> perihal pengadaan untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>, dengan ini kami mengajukan penawaran harga sebagai berikut:</p>
+
+            <table class="dtable" style="width:100%; font-size:11.5pt; margin:.8rem 0;">
+              <tr><td style="width:12rem;">Uraian Barang/Jasa</td><td style="width:.7rem;">:</td><td data-bind="desa.uraian"></td></tr>
+              <tr><td>Volume/Satuan</td><td>:</td><td data-bind="desa.volume"></td></tr>
+              <tr><td>Total Harga Penawaran</td><td>:</td><td style="font-weight:700;" data-bind="supplierA.total_formatted"></td></tr>
+              <tr><td colspan="3" style="font-style:italic;">Terbilang: <span data-bind="supplierA.total_terbilang"></span> rupiah</td></tr>
+            </table>
+
+            <p style="text-align:justify;">Rincian harga per item sebagaimana tercantum dalam Lampiran Daftar Rincian Penawaran Harga yang menyertai surat ini. Harga penawaran tersebut merupakan harga pasar yang wajar di wilayah setempat, dan telah memperhitungkan biaya pengiriman/pemasangan sesuai kebutuhan pekerjaan. Bersama surat ini kami turut lampirkan Formulir Isian Data Suplier dan Pakta Integritas sebagai kelengkapan administrasi.</p>
+
+            <p style="text-align:justify;">Demikian penawaran ini kami sampaikan. Atas perhatiannya kami ucapkan terima kasih.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Yang Menawarkan,<br><span data-bind="supplierA.nama_toko"></span><br><br><br><br>
+                <span class="sig-name" data-bind="supplierA.nama_pemilik"></span>
+              </div>
+            </td></tr></table>
+          </div>
+
+          <!-- Penawaran dari Supplier B -->
+          <div class="doc-page">
+            <table style="width:100%; font-size:12pt; margin-bottom:.4rem;"><tr>
+              <td style="font-weight:800; font-size:13.5pt;" data-bind="supplierB.nama_toko"></td>
+              <td style="text-align:right; vertical-align:top;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc4b-tanggal">.....................</span></td>
+            </tr></table>
+            <p style="margin-top:-.3rem; font-size:11pt;" data-bind="supplierB.alamat"></p>
+            <hr style="border:none; border-top:1px solid #111; margin:.6rem 0 1rem;">
+
+            <table style="width:100%; font-size:12pt; margin-bottom:1rem;">
+              <tr><td style="width:5.5rem; vertical-align:top;">Nomor</td><td style="width:1rem;">:</td><td><span contenteditable="true" data-default-doc="doc4b-nomor">-</span></td></tr>
+              <tr><td style="vertical-align:top;">Lampiran</td><td>:</td><td>1 (satu) berkas rincian harga</td></tr>
+              <tr><td style="vertical-align:top;">Perihal</td><td>:</td><td style="font-weight:700;">Balasan Penawaran Harga</td></tr>
+            </table>
+
+            <p>Kepada Yth.<br>Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br>di Tempat</p>
+
+            <p>Dengan hormat,</p>
+            <p style="text-align:justify;">Menunjuk surat penawaran/permintaan penawaran harga dari Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span> Nomor <span contenteditable="true" data-default-doc="doc4b-ref-nomor">003/SPPH-B/TPK/2026</span> perihal pengadaan untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>, dengan ini kami mengajukan penawaran harga sebagai berikut:</p>
+
+            <table class="dtable" style="width:100%; font-size:11.5pt; margin:.8rem 0;">
+              <tr><td style="width:12rem;">Uraian Barang/Jasa</td><td style="width:.7rem;">:</td><td data-bind="desa.uraian"></td></tr>
+              <tr><td>Volume/Satuan</td><td>:</td><td data-bind="desa.volume"></td></tr>
+              <tr><td>Total Harga Penawaran</td><td>:</td><td style="font-weight:700;" data-bind="supplierB.total_formatted"></td></tr>
+              <tr><td colspan="3" style="font-style:italic;">Terbilang: <span data-bind="supplierB.total_terbilang"></span> rupiah</td></tr>
+            </table>
+
+            <p style="text-align:justify;">Rincian harga per item sebagaimana tercantum dalam Lampiran Daftar Rincian Penawaran Harga yang menyertai surat ini. Harga penawaran tersebut merupakan harga pasar yang wajar di wilayah setempat, dan telah memperhitungkan biaya pengiriman/pemasangan sesuai kebutuhan pekerjaan. Bersama surat ini kami turut lampirkan Formulir Isian Data Suplier dan Pakta Integritas sebagai kelengkapan administrasi.</p>
+
+            <p style="text-align:justify;">Demikian penawaran ini kami sampaikan. Atas perhatiannya kami ucapkan terima kasih.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Yang Menawarkan,<br><span data-bind="supplierB.nama_toko"></span><br><br><br><br>
+                <span class="sig-name" data-bind="supplierB.nama_pemilik"></span>
+              </div>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 5. DAFTAR RINCIAN PENAWARAN HARGA (LAMPIRAN)         -->
+      <!-- =================================================== -->
+      <div id="tab-doc5" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">5. Daftar Rincian Penawaran Harga</h2>
+            <p class="text-[12px] text-[#8592A8]">Rincian harga per item dari masing-masing suplier — lampiran Berkas 4</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Rincian dari Supplier A -->
+          <div class="doc-page">
+            <p style="text-align:right; margin-bottom:0;">Lampiran Surat Penawaran Nomor: <span contenteditable="true" data-default-doc="doc5a-ref">-</span></p>
+            <div class="doc-title" style="margin-top:.3rem;">DAFTAR RINCIAN PENAWARAN HARGA BARANG/JASA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Suplier: <span data-bind="supplierA.nama_toko"></span></div>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama Barang/Jasa</th><th style="width:6rem;">Volume/Satuan</th><th class="money" style="width:7rem;">Harga Satuan (Rp)</th><th class="money" style="width:7rem;">Jumlah Harga (Rp)</th></tr></thead>
+              <tbody id="lampiran-rincian-tbody-A"></tbody>
+              <tfoot><tr><td colspan="4" style="text-align:right;">TOTAL HARGA PENAWARAN</td><td class="money" id="lampiran-rincian-total-A"></td></tr></tfoot>
+            </table>
+            <p style="font-style:italic; margin-top:.4rem;">Terbilang: <span data-bind="supplierA.total_terbilang"></span> rupiah</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Yang Menawarkan,<br><span data-bind="supplierA.nama_toko"></span><br><br><br><br>
+                <span class="sig-name" data-bind="supplierA.nama_pemilik"></span>
+              </div>
+            </td></tr></table>
+          </div>
+
+          <!-- Rincian dari Supplier B -->
+          <div class="doc-page">
+            <p style="text-align:right; margin-bottom:0;">Lampiran Surat Penawaran Nomor: <span contenteditable="true" data-default-doc="doc5b-ref">-</span></p>
+            <div class="doc-title" style="margin-top:.3rem;">DAFTAR RINCIAN PENAWARAN HARGA BARANG/JASA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Suplier: <span data-bind="supplierB.nama_toko"></span></div>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama Barang/Jasa</th><th style="width:6rem;">Volume/Satuan</th><th class="money" style="width:7rem;">Harga Satuan (Rp)</th><th class="money" style="width:7rem;">Jumlah Harga (Rp)</th></tr></thead>
+              <tbody id="lampiran-rincian-tbody-B"></tbody>
+              <tfoot><tr><td colspan="4" style="text-align:right;">TOTAL HARGA PENAWARAN</td><td class="money" id="lampiran-rincian-total-B"></td></tr></tfoot>
+            </table>
+            <p style="font-style:italic; margin-top:.4rem;">Terbilang: <span data-bind="supplierB.total_terbilang"></span> rupiah</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Yang Menawarkan,<br><span data-bind="supplierB.nama_toko"></span><br><br><br><br>
+                <span class="sig-name" data-bind="supplierB.nama_pemilik"></span>
+              </div>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 6. FORMULIR ISIAN DATA SUPLIER & IZIN USAHA          -->
+      <!-- =================================================== -->
+      <div id="tab-doc6" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">6. Formulir Isian Data Suplier &amp; Izin Usaha</h2>
+            <p class="text-[12px] text-[#8592A8]">Diisi dan dilengkapi oleh masing-masing calon penyedia</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Formulir Supplier A -->
+          <div class="doc-page">
+            <div class="doc-title">FORMULIR ISIAN DATA CALON PENYEDIA BARANG/JASA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Kegiatan: <span data-bind="desa.nama_kegiatan"></span> — Tahun Anggaran <span data-bind="desa.tahun"></span></div>
+
+            <div class="form-line"><div>Nama Toko/Penyedia</div><div>:</div><div data-bind="supplierA.nama_toko" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Nama Pemilik/Penanggung Jawab</div><div>:</div><div data-bind="supplierA.nama_pemilik" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Alamat Usaha</div><div>:</div><div data-bind="supplierA.alamat" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>No. Telepon/HP</div><div>:</div><div data-bind="supplierA.no_hp" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Bidang/Jenis Usaha</div><div>:</div><div data-bind="supplierA.bidang_usaha" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Nomor Izin Usaha/NIB</div><div>:</div><div data-bind="supplierA.no_izin_usaha" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>NPWP (jika ada)</div><div>:</div><div data-bind="supplierA.npwp" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+
+            <div class="doc-sub">Dokumen yang Dilampirkan</div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Kartu Tanda Penduduk (KTP) Pemilik/Penanggung Jawab</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Nomor Pokok Wajib Pajak (NPWP), apabila ada</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Surat Izin Usaha/Nomor Induk Berusaha (NIB)</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Surat Keterangan Domisili Usaha (apabila diperlukan)</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Lainnya: <span contenteditable="true" style="border-bottom:1px dotted #9aa;">.....................</span></div></div>
+
+            <p style="text-align:justify; margin-top:1rem;">Dengan ini saya menyatakan bahwa data yang saya isikan di atas adalah benar dan dapat dipertanggungjawabkan, serta bersedia melengkapi dokumen asli apabila diminta oleh Tim Pengelola Kegiatan (TPK) untuk keperluan verifikasi.</p>
+
+            <table style="width:100%; margin-top:1.5rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc6a-tanggal">.....................</span><br>
+              Yang Mengisi,<br><br><br><br>
+              <span class="sig-name" data-bind="supplierA.nama_pemilik"></span>
+            </td></tr></table>
+          </div>
+
+          <!-- Formulir Supplier B -->
+          <div class="doc-page">
+            <div class="doc-title">FORMULIR ISIAN DATA CALON PENYEDIA BARANG/JASA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Kegiatan: <span data-bind="desa.nama_kegiatan"></span> — Tahun Anggaran <span data-bind="desa.tahun"></span></div>
+
+            <div class="form-line"><div>Nama Toko/Penyedia</div><div>:</div><div data-bind="supplierB.nama_toko" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Nama Pemilik/Penanggung Jawab</div><div>:</div><div data-bind="supplierB.nama_pemilik" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Alamat Usaha</div><div>:</div><div data-bind="supplierB.alamat" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>No. Telepon/HP</div><div>:</div><div data-bind="supplierB.no_hp" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Bidang/Jenis Usaha</div><div>:</div><div data-bind="supplierB.bidang_usaha" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>Nomor Izin Usaha/NIB</div><div>:</div><div data-bind="supplierB.no_izin_usaha" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+            <div class="form-line"><div>NPWP (jika ada)</div><div>:</div><div data-bind="supplierB.npwp" style="border-bottom:1px dotted #9aa;">&nbsp;</div></div>
+
+            <div class="doc-sub">Dokumen yang Dilampirkan</div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Kartu Tanda Penduduk (KTP) Pemilik/Penanggung Jawab</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Nomor Pokok Wajib Pajak (NPWP), apabila ada</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Fotokopi Surat Izin Usaha/Nomor Induk Berusaha (NIB)</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Surat Keterangan Domisili Usaha (apabila diperlukan)</div></div>
+            <div class="chk-row"><div class="chk-box"></div><div>Lainnya: <span contenteditable="true" style="border-bottom:1px dotted #9aa;">.....................</span></div></div>
+
+            <p style="text-align:justify; margin-top:1rem;">Dengan ini saya menyatakan bahwa data yang saya isikan di atas adalah benar dan dapat dipertanggungjawabkan, serta bersedia melengkapi dokumen asli apabila diminta oleh Tim Pengelola Kegiatan (TPK) untuk keperluan verifikasi.</p>
+
+            <table style="width:100%; margin-top:1.5rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc6b-tanggal">.....................</span><br>
+              Yang Mengisi,<br><br><br><br>
+              <span class="sig-name" data-bind="supplierB.nama_pemilik"></span>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 7. PAKTA INTEGRITAS SUPLIER                          -->
+      <!-- =================================================== -->
+      <div id="tab-doc7" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">7. Pakta Integritas dari Suplier</h2>
+            <p class="text-[12px] text-[#8592A8]">Pernyataan anti korupsi, kolusi, dan nepotisme dari calon penyedia</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+
+          <!-- Pakta Integritas Supplier A -->
+          <div class="doc-page">
+            <div class="doc-title">PAKTA INTEGRITAS</div>
+
+            <p style="text-align:justify; margin-top:1rem;">Saya yang bertanda tangan di bawah ini:</p>
+            <table style="width:100%; font-size:12pt; margin:.5rem 0 1rem;">
+              <tr><td style="width:7rem; vertical-align:top;">Nama</td><td style="width:1rem; vertical-align:top;">:</td><td data-bind="supplierA.nama_pemilik"></td></tr>
+              <tr><td style="vertical-align:top;">Jabatan</td><td style="vertical-align:top;">:</td><td>Pemilik/Penanggung Jawab <span data-bind="supplierA.nama_toko"></span></td></tr>
+              <tr><td style="vertical-align:top;">Alamat</td><td style="vertical-align:top;">:</td><td data-bind="supplierA.alamat"></td></tr>
+            </table>
+
+            <p style="text-align:justify;">dalam rangka pengadaan barang/jasa untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b> pada Desa <span data-bind="desa.nama_desa"></span>, dengan ini menyatakan bahwa saya:</p>
+
+            <p style="margin:.5rem 0 0;">1. tidak akan melakukan praktik Korupsi, Kolusi, dan Nepotisme (KKN) dalam proses pengadaan barang/jasa ini;</p>
+            <p style="margin:.3rem 0 0;">2. akan mengikuti proses pengadaan secara bersih, transparan, dan profesional, serta menyampaikan data dan informasi yang benar sesuai fakta;</p>
+            <p style="margin:.3rem 0 0;">3. tidak akan memberikan atau menjanjikan sesuatu berupa apa pun kepada siapa pun yang diketahui atau patut dapat diduga berkaitan dengan pengadaan ini untuk memengaruhi keputusan Tim Pengelola Kegiatan (TPK);</p>
+            <p style="margin:.3rem 0 0 0;">4. apabila saya melanggar hal-hal yang telah saya nyatakan di atas, saya bersedia dikenakan sanksi administratif, digugurkan sebagai calon penyedia, dimasukkan dalam daftar hitam, dan/atau dituntut sesuai ketentuan peraturan perundang-undangan yang berlaku.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:55%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc7a-tanggal">.....................</span><br>
+              Yang Membuat Pernyataan,<br><span class="editable-hint">(materai sesuai ketentuan)</span><br><br><br>
+              <span class="sig-name" data-bind="supplierA.nama_pemilik"></span>
+            </td></tr></table>
+          </div>
+
+          <!-- Pakta Integritas Supplier B -->
+          <div class="doc-page">
+            <div class="doc-title">PAKTA INTEGRITAS</div>
+
+            <p style="text-align:justify; margin-top:1rem;">Saya yang bertanda tangan di bawah ini:</p>
+            <table style="width:100%; font-size:12pt; margin:.5rem 0 1rem;">
+              <tr><td style="width:7rem; vertical-align:top;">Nama</td><td style="width:1rem; vertical-align:top;">:</td><td data-bind="supplierB.nama_pemilik"></td></tr>
+              <tr><td style="vertical-align:top;">Jabatan</td><td style="vertical-align:top;">:</td><td>Pemilik/Penanggung Jawab <span data-bind="supplierB.nama_toko"></span></td></tr>
+              <tr><td style="vertical-align:top;">Alamat</td><td style="vertical-align:top;">:</td><td data-bind="supplierB.alamat"></td></tr>
+            </table>
+
+            <p style="text-align:justify;">dalam rangka pengadaan barang/jasa untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b> pada Desa <span data-bind="desa.nama_desa"></span>, dengan ini menyatakan bahwa saya:</p>
+
+            <p style="margin:.5rem 0 0;">1. tidak akan melakukan praktik Korupsi, Kolusi, dan Nepotisme (KKN) dalam proses pengadaan barang/jasa ini;</p>
+            <p style="margin:.3rem 0 0;">2. akan mengikuti proses pengadaan secara bersih, transparan, dan profesional, serta menyampaikan data dan informasi yang benar sesuai fakta;</p>
+            <p style="margin:.3rem 0 0;">3. tidak akan memberikan atau menjanjikan sesuatu berupa apa pun kepada siapa pun yang diketahui atau patut dapat diduga berkaitan dengan pengadaan ini untuk memengaruhi keputusan Tim Pengelola Kegiatan (TPK);</p>
+            <p style="margin:.3rem 0 0 0;">4. apabila saya melanggar hal-hal yang telah saya nyatakan di atas, saya bersedia dikenakan sanksi administratif, digugurkan sebagai calon penyedia, dimasukkan dalam daftar hitam, dan/atau dituntut sesuai ketentuan peraturan perundang-undangan yang berlaku.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:55%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc7b-tanggal">.....................</span><br>
+              Yang Membuat Pernyataan,<br><span class="editable-hint">(materai sesuai ketentuan)</span><br><br><br>
+              <span class="sig-name" data-bind="supplierB.nama_pemilik"></span>
+            </td></tr></table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 8. SURAT UNDANGAN KLARIFIKASI & NEGOSIASI            -->
+      <!-- =================================================== -->
+      <div id="tab-doc8" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">8. Surat Undangan Klarifikasi &amp; Negosiasi</h2>
+            <p class="text-[12px] text-[#8592A8]">Dikirim TPK kepada calon penyedia terpilih untuk hadir dalam rapat</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Sekretariat Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <table style="width:100%; font-size:12pt; margin-bottom:1rem;">
+              <tr><td style="width:5.5rem; vertical-align:top;">Nomor</td><td style="width:1rem; vertical-align:top;">:</td><td><span contenteditable="true" data-default-doc="doc8-nomor">004/UND/TPK/2026</span></td>
+                  <td style="width:6.5rem; vertical-align:top; text-align:right;">&nbsp;</td><td style="text-align:right; vertical-align:top;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc8-tanggal">.....................</span></td></tr>
+              <tr><td style="vertical-align:top;">Lampiran</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">-</td><td></td><td></td></tr>
+              <tr><td style="vertical-align:top;">Perihal</td><td style="vertical-align:top;">:</td><td style="vertical-align:top; font-weight:700;">Undangan Klarifikasi dan Negosiasi</td><td></td><td></td></tr>
+            </table>
+
+            <p>Kepada Yth.<br>
+            <span data-bind="winner.nama_pemilik">.....................</span><br>
+            <span data-bind="winner.nama_toko">.....................</span><br>
+            di <span data-bind="winner.alamat">.....................</span></p>
+
+            <p>Dengan hormat,</p>
+            <p style="text-align:justify;">Sehubungan dengan hasil evaluasi penawaran harga untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>, dengan ini kami mengundang Saudara untuk hadir dalam acara Klarifikasi Teknis dan Negosiasi Harga, yang akan dilaksanakan pada:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:6.5rem; vertical-align:top;">Hari/Tanggal</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;"><span contenteditable="true" data-default-doc="doc8-hari-rapat">.....................</span></td></tr>
+              <tr><td style="vertical-align:top;">Waktu</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;"><span contenteditable="true" data-default-doc="doc8-waktu-rapat">.....................</span> WIB s.d. selesai</td></tr>
+              <tr><td style="vertical-align:top;">Tempat</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">Kantor Kepala Desa <span data-bind="desa.nama_desa"></span></td></tr>
+              <tr><td style="vertical-align:top;">Acara</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">Klarifikasi teknis dan negosiasi harga penawaran barang/jasa</td></tr>
+            </table>
+
+            <p style="text-align:justify;">Mengingat pentingnya acara tersebut, kami mohon kehadiran Saudara atau perwakilan yang diberi kuasa penuh tepat pada waktu yang telah ditentukan, dengan membawa dokumen pendukung penawaran yang telah disampaikan.</p>
+
+            <p style="text-align:justify;">Demikian undangan ini kami sampaikan. Atas perhatian dan kerja sama Saudara, kami ucapkan terima kasih.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <div class="sig-box">
+                Ketua Tim Pengelola Kegiatan (TPK)<br>Desa <span data-bind="desa.nama_desa"></span><br><br><br><br>
+                <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+              </div>
+            </td></tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 9. DAFTAR HADIR RAPAT KLARIFIKASI & NEGOSIASI        -->
+      <!-- =================================================== -->
+      <div id="tab-doc9" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">9. Daftar Hadir Klarifikasi &amp; Negosiasi</h2>
+            <p class="text-[12px] text-[#8592A8]">Daftar hadir peserta rapat klarifikasi teknis dan negosiasi harga</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="doc-title">DAFTAR HADIR</div>
+            <div class="doc-nomor">Rapat Klarifikasi Teknis dan Negosiasi Harga</div>
+
+            <table style="width:100%; font-size:12pt; margin:1rem 0;">
+              <tr><td style="width:6.5rem; vertical-align:top;">Hari/Tanggal</td><td style="width:1rem; vertical-align:top;">:</td><td style="vertical-align:top;"><span contenteditable="true" data-default-doc="doc9-hari-rapat">.....................</span></td></tr>
+              <tr><td style="vertical-align:top;">Tempat</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;">Kantor Kepala Desa <span data-bind="desa.nama_desa"></span></td></tr>
+              <tr><td style="vertical-align:top;">Kegiatan</td><td style="vertical-align:top;">:</td><td style="vertical-align:top;" data-bind="desa.nama_kegiatan"></td></tr>
+            </table>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama</th><th style="width:11rem;">Unsur/Jabatan</th><th style="width:9rem;">Tanda Tangan</th></tr></thead>
+              <tbody id="daftar-hadir-tbody"></tbody>
+            </table>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:60%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc9-tanggal2">.....................</span><br>
+              Mengetahui,<br>Ketua Tim Pengelola Kegiatan (TPK)<br><br><br><br>
+              <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+            </td></tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 10. BERITA ACARA HASIL KLARIFIKASI & NEGOSIASI       -->
+      <!-- =================================================== -->
+      <div id="tab-doc10" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">10. Berita Acara Klarifikasi &amp; Negosiasi</h2>
+            <p class="text-[12px] text-[#8592A8]">Evaluasi penawaran, penetapan pemenang, dan hasil negosiasi harga</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">BERITA ACARA HASIL KLARIFIKASI DAN NEGOSIASI PENAWARAN</div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc10-nomor">005/BAKN/TPK/2026</span></div>
+
+            <p style="text-align:justify;">Pada hari ini <span contenteditable="true" data-default-doc="doc10-hari">.....................</span>, tanggal <span contenteditable="true" data-default-doc="doc10-tanggal">.....................</span>, bertempat di Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, berdasarkan Surat Undangan Klarifikasi dan Negosiasi Nomor <span contenteditable="true" data-default-doc="doc10-ref-und">004/UND/TPK/2026</span>, Tim Pengelola Kegiatan (TPK) telah melaksanakan evaluasi, klarifikasi teknis, dan negosiasi harga atas penawaran yang masuk untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>, dengan hasil sebagai berikut:</p>
+
+            <div class="doc-sub">A. Hasil Evaluasi Penawaran</div>
+            <table class="dtable" style="width:100%; font-size:11.5pt; margin:.6rem 0 1rem;">
+              <thead><tr><th style="width:35%;">Uraian</th><th style="width:32.5%;">Calon Penyedia A</th><th style="width:32.5%;">Calon Penyedia B</th></tr></thead>
+              <tbody>
+                <tr><td>Nama Toko/Penyedia</td><td data-bind="supplierA.nama_toko"></td><td data-bind="supplierB.nama_toko"></td></tr>
+                <tr><td>Nama Pemilik</td><td data-bind="supplierA.nama_pemilik"></td><td data-bind="supplierB.nama_pemilik"></td></tr>
+                <tr><td>Alamat</td><td data-bind="supplierA.alamat"></td><td data-bind="supplierB.alamat"></td></tr>
+                <tr><td>Total Nilai Penawaran</td><td style="font-weight:700;" data-bind="supplierA.total_formatted" data-winner-highlight="A"></td><td style="font-weight:700;" data-bind="supplierB.total_formatted" data-winner-highlight="B"></td></tr>
+                <tr><td>Keterangan</td><td data-winner-badge="A"></td><td data-winner-badge="B"></td></tr>
+              </tbody>
+            </table>
+
+            <p id="doc10-pagu-clause" style="text-align:justify;"></p>
+
+            <p style="text-align:justify;">Berdasarkan hasil evaluasi terhadap kewajaran harga serta mempertimbangkan prinsip efisiensi dan efektivitas dalam pengadaan barang/jasa di desa sebagaimana diatur dalam Peraturan LKPP Nomor 12 Tahun 2019 tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa dan Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa, Tim Pengelola Kegiatan dengan ini menetapkan:</p>
+
+            <p style="text-align:center; font-weight:700; margin:.8rem 0;"><span data-bind="winner.nama_toko"></span><br>sebagai <u>PENYEDIA TERPILIH / PEMENANG PENGADAAN</u></p>
+
+            <div class="doc-sub">B. Hasil Klarifikasi dan Negosiasi</div>
+            <table class="dtable" style="width:100%; font-size:11.5pt; margin:.6rem 0 1rem;">
+              <tbody>
+                <tr><td style="width:45%;">Nama Penyedia</td><td data-bind="winner.nama_toko"></td></tr>
+                <tr><td>Nama Pemilik</td><td data-bind="winner.nama_pemilik"></td></tr>
+                <tr><td>Uraian Pekerjaan/Barang</td><td data-bind="desa.uraian"></td></tr>
+                <tr><td>Volume/Satuan</td><td data-bind="desa.volume"></td></tr>
+                <tr><td>Nilai Penawaran Awal</td><td data-bind="winner.total_formatted"></td></tr>
+                <tr><td style="font-weight:700;">Nilai Kesepakatan Setelah Negosiasi</td><td style="font-weight:700;" data-bind="nego.nilai_formatted"></td></tr>
+                <tr><td colspan="2" style="font-style:italic;">Terbilang: <span data-bind="nego.nilai_terbilang"></span> rupiah</td></tr>
+              </tbody>
+            </table>
+
+            <p style="text-align:justify;">Klarifikasi dilakukan terhadap kesesuaian spesifikasi teknis, ketersediaan barang, jadwal penyelesaian, serta kewajaran harga penawaran. Penyedia menyatakan sanggup melaksanakan pekerjaan/pengadaan sesuai spesifikasi yang diminta dalam jangka waktu <span data-bind="desa.jangka_waktu"></span> hari kalender sejak diterbitkannya Surat Perintah Kerja (SPK).</p>
+
+            <p style="text-align:justify;">Kedua belah pihak menyatakan sepakat dan tidak keberatan atas hasil klarifikasi dan negosiasi ini, untuk selanjutnya dituangkan dalam Surat Perintah Kerja (SPK).</p>
+
+            <p style="text-align:justify;">Demikian Berita Acara ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya.</p>
+
+            <p style="margin-top:1.2rem;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc10-tanggal2">.....................</span></p>
+
+            <table style="width:100%; margin-top:1.2rem;"><tr>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">Pihak Kedua,<br>Penyedia Barang/Jasa<br><br><br><br><span class="sig-name" data-bind="winner.nama_pemilik"></span></div>
+              </td>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">Pihak Pertama,<br>Ketua Tim Pengelola Kegiatan<br><br><br><br><span class="sig-name" data-bind="tpk.ketua_nama"></span></div>
+              </td>
+            </tr></table>
+
+            <p style="font-weight:700; margin-top:1.5rem; margin-bottom:.6rem;">Mengetahui / Menyaksikan — Anggota TPK Lainnya:</p>
+            <div id="sig-tpk-doc10" class="grid grid-cols-3 gap-4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 11. SURAT PERINTAH KERJA (SPK)                       -->
+      <!-- =================================================== -->
+      <div id="tab-doc11" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">11. Surat Perintah Kerja (SPK)</h2>
+            <p class="text-[12px] text-[#8592A8]">Perikatan kerja/perjanjian kerja sama antara TPK Desa dengan penyedia terpilih</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">SURAT PERINTAH KERJA (SPK)</div>
+            <div style="text-align:center; font-size:11pt; margin-top:-.4rem; margin-bottom:.6rem;">(Surat Perjanjian Kerja Sama Pengadaan Barang/Jasa)</div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc11-nomor">006/SPK/TPK/2026</span></div>
+
+            <p style="text-align:justify;">Pada hari ini <span contenteditable="true" data-default-doc="doc11-hari">.....................</span>, tanggal <span contenteditable="true" data-default-doc="doc11-tanggal">.....................</span>, yang bertanda tangan di bawah ini masing-masing:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0;">
+              <tr><td style="width:1.4rem; vertical-align:top;">I.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="tpk.ketua_nama"></b><br>
+                Jabatan&nbsp;: Ketua Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span><br>
+                Bertindak untuk dan atas nama Tim Pengelola Kegiatan Desa <span data-bind="desa.nama_desa"></span>, selanjutnya disebut <b>PIHAK PERTAMA</b>.
+              </td></tr>
+            </table>
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:1.4rem; vertical-align:top;">II.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="winner.nama_pemilik"></b><br>
+                Jabatan&nbsp;: Pemilik / Penanggung Jawab <span data-bind="winner.nama_toko"></span><br>
+                Alamat&nbsp;&nbsp;: <span data-bind="winner.alamat"></span><br>
+                Bertindak untuk dan atas nama <span data-bind="winner.nama_toko"></span>, selanjutnya disebut <b>PIHAK KEDUA</b>.
+              </td></tr>
+            </table>
+
+            <p style="text-align:justify;">Kedua belah pihak sepakat mengadakan perjanjian pengadaan barang/jasa dengan ketentuan sebagai berikut:</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 1<br>LINGKUP PEKERJAAN</p>
+            <p style="text-align:justify;">PIHAK PERTAMA memberi perintah kerja kepada PIHAK KEDUA, dan PIHAK KEDUA menerima serta menyanggupi perintah kerja tersebut, untuk melaksanakan pengadaan <span data-bind="desa.uraian"></span> sejumlah <span data-bind="desa.volume"></span>, sebagaimana rincian pada Lampiran Daftar Rincian Penawaran Harga (Berkas 5), guna keperluan kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>.</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 2<br>NILAI PEKERJAAN</p>
+            <p style="text-align:justify;">Nilai pekerjaan sebagaimana dimaksud dalam Pasal 1 disepakati sebesar <b data-bind="nego.nilai_formatted"></b> (<span data-bind="nego.nilai_terbilang"></span> rupiah), sesuai hasil klarifikasi dan negosiasi sebagaimana tertuang dalam Berita Acara Klarifikasi dan Negosiasi Nomor <span contenteditable="true" data-default-doc="doc11-ref-nomor">005/BAKN/TPK/2026</span>.</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 3<br>JANGKA WAKTU PELAKSANAAN</p>
+            <p style="text-align:justify;">Pekerjaan sebagaimana dimaksud dalam Pasal 1 harus telah selesai dilaksanakan dalam jangka waktu <b data-bind="desa.jangka_waktu"></b> (<span data-bind="desa.jangka_waktu_terbilang"></span>) hari kalender, terhitung sejak tanggal Surat Perintah Kerja ini ditandatangani.</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 4<br>SUMBER DANA</p>
+            <p style="text-align:justify;">Pembiayaan pekerjaan sebagaimana dimaksud dalam Pasal 1 dibebankan pada <span data-bind="desa.sumber_dana"></span> Desa <span data-bind="desa.nama_desa"></span> Tahun Anggaran <b data-bind="desa.tahun"></b>.</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 5<br>HAK DAN KEWAJIBAN</p>
+            <p style="text-align:justify;">PIHAK KEDUA wajib menyerahkan barang/hasil pekerjaan sesuai spesifikasi, volume, dan mutu yang disepakati, serta bertanggung jawab atas kesesuaian tersebut hingga diterbitkannya Berita Acara Pemeriksaan. PIHAK PERTAMA berkewajiban melakukan pemeriksaan dan pembayaran sesuai ketentuan yang berlaku setelah barang/pekerjaan dinyatakan sesuai.</p>
+
+            <p style="font-weight:700; margin-top:.8rem;">Pasal 6<br>KETENTUAN LAIN</p>
+            <p style="text-align:justify;">Hal-hal yang belum diatur dalam Surat Perintah Kerja ini akan diatur kemudian berdasarkan kesepakatan kedua belah pihak, dengan berpedoman pada Peraturan LKPP Nomor 12 Tahun 2019 tentang Pedoman Penyusunan Tata Cara Pengadaan Barang/Jasa di Desa dan Peraturan Bupati Lampung Timur Nomor 4 Tahun 2022 tentang Tata Cara Pengadaan Barang/Jasa di Desa.</p>
+
+            <p style="text-align:justify; margin-top:.8rem;">Demikian Surat Perintah Kerja ini dibuat dan ditandatangani oleh kedua belah pihak dalam keadaan sadar tanpa paksaan dari pihak manapun, untuk dilaksanakan sebagaimana mestinya.</p>
+
+            <table style="width:100%; margin-top:1.5rem;"><tr>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK KEDUA,<br><span data-bind="winner.nama_toko"></span><br><br><br><br><span class="sig-name" data-bind="winner.nama_pemilik"></span></div>
+              </td>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK PERTAMA,<br>Ketua TPK Desa <span data-bind="desa.nama_desa"></span><br><br><br><br><span class="sig-name" data-bind="tpk.ketua_nama"></span></div>
+              </td>
+            </tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 12. BERITA ACARA PEMERIKSAAN BARANG/PEKERJAAN        -->
+      <!-- =================================================== -->
+      <div id="tab-doc12" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">12. Berita Acara Pemeriksaan Barang/Pekerjaan</h2>
+            <p class="text-[12px] text-[#8592A8]">Pemeriksaan kesesuaian hasil pekerjaan/barang terhadap SPK</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">BERITA ACARA PEMERIKSAAN BARANG/PEKERJAAN</div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc12-nomor">007/BAP/TPK/2026</span></div>
+
+            <p style="text-align:justify;">Pada hari ini <span contenteditable="true" data-default-doc="doc12-hari">.....................</span>, tanggal <span contenteditable="true" data-default-doc="doc12-tanggal">.....................</span>, bertempat di Desa <span data-bind="desa.nama_desa"></span>, Kecamatan <span data-bind="desa.kecamatan"></span>, Tim Pengelola Kegiatan (TPK) selaku Tim Pemeriksa telah melakukan pemeriksaan terhadap hasil pengadaan barang/jasa yang dilaksanakan oleh <b data-bind="winner.nama_toko"></b> berdasarkan Surat Perintah Kerja Nomor <span contenteditable="true" data-default-doc="doc12-ref-nomor">006/SPK/TPK/2026</span>, untuk kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>.</p>
+
+            <p style="text-align:justify;">Rincian hasil pemeriksaan atas masing-masing jenis barang/pekerjaan sebagaimana tercantum dalam Lampiran Berita Acara ini (Berkas 13).</p>
+
+            <p style="text-align:justify;">Berdasarkan pemeriksaan yang telah dilakukan, Tim Pemeriksa menyatakan bahwa barang/pekerjaan yang diserahkan oleh Penyedia telah <b>SESUAI</b> dengan spesifikasi, volume, dan mutu yang dipersyaratkan dalam Surat Perintah Kerja (SPK), sehingga dapat diterima untuk selanjutnya dilakukan serah terima kepada Tim Pengelola Kegiatan.</p>
+
+            <p style="text-align:justify;">Demikian Berita Acara Pemeriksaan Barang/Pekerjaan ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya.</p>
+
+            <p style="margin-top:1.2rem;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc12-tanggal2">.....................</span></p>
+            <p style="font-weight:700; margin-bottom:.6rem;">Tim Pemeriksa (Tim Pengelola Kegiatan):</p>
+            <div id="sig-tpk-doc12" class="grid grid-cols-3 gap-4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 13. LAMPIRAN RINCIAN BARANG/PEKERJAAN DIPERIKSA      -->
+      <!-- =================================================== -->
+      <div id="tab-doc13" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">13. Lampiran Rincian Barang Diperiksa</h2>
+            <p class="text-[12px] text-[#8592A8]">Daftar rincian nama barang/pekerjaan yang diperiksa — lampiran Berkas 12</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <p style="text-align:right; margin-bottom:0;">Lampiran Berita Acara Pemeriksaan Nomor: <span contenteditable="true" data-default-doc="doc13-ref">007/BAP/TPK/2026</span></p>
+            <div class="doc-title" style="margin-top:.3rem;">DAFTAR RINCIAN NAMA BARANG/PEKERJAAN YANG DIPERIKSA</div>
+            <div class="doc-nomor" style="margin-bottom:1.2rem;">Penyedia: <span data-bind="winner.nama_toko"></span></div>
+
+            <table class="rtable">
+              <thead><tr><th class="num" style="width:2.2rem;">No</th><th>Nama Barang/Pekerjaan</th><th style="width:6.5rem;">Volume/Satuan</th><th style="width:8rem;">Hasil Pemeriksaan</th><th style="width:8rem;">Keterangan</th></tr></thead>
+              <tbody id="pemeriksaan-tbody"></tbody>
+            </table>
+
+            <p style="text-align:justify; margin-top:1rem;">Seluruh item barang/pekerjaan tersebut di atas telah diperiksa oleh Tim Pemeriksa dan dinyatakan sesuai dengan spesifikasi yang dipersyaratkan dalam Surat Perintah Kerja, kecuali dinyatakan lain pada kolom keterangan.</p>
+
+            <table style="width:100%; margin-top:2rem;"><tr><td style="width:55%;"></td><td style="text-align:center;">
+              <span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc13-tanggal">.....................</span><br>
+              Mengetahui,<br>Ketua Tim Pemeriksa<br><br><br><br>
+              <span class="sig-name" data-bind="tpk.ketua_nama">( ................................. )</span>
+            </td></tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 14. BERITA ACARA SERAH TERIMA (BAST) BARANG          -->
+      <!-- =================================================== -->
+      <div id="tab-doc14" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">14. BAST Barang/Pekerjaan dari Suplier</h2>
+            <p class="text-[12px] text-[#8592A8]">Serah terima dari Penyedia kepada TPK Desa</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">BERITA ACARA SERAH TERIMA (BAST) BARANG/PEKERJAAN</div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc14-nomor">008/BAST-B/TPK/2026</span></div>
+
+            <p style="text-align:justify;">Pada hari ini <span contenteditable="true" data-default-doc="doc14-hari">.....................</span>, tanggal <span contenteditable="true" data-default-doc="doc14-tanggal">.....................</span>, kami yang bertanda tangan di bawah ini:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0;">
+              <tr><td style="width:1.4rem; vertical-align:top;">I.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="winner.nama_pemilik"></b><br>
+                Jabatan&nbsp;: Pemilik / Penanggung Jawab <span data-bind="winner.nama_toko"></span><br>
+                Selanjutnya disebut <b>PIHAK PERTAMA</b> (Penyedia).
+              </td></tr>
+            </table>
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:1.4rem; vertical-align:top;">II.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="tpk.ketua_nama"></b><br>
+                Jabatan&nbsp;: Ketua Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span><br>
+                Selanjutnya disebut <b>PIHAK KEDUA</b> (Penerima).
+              </td></tr>
+            </table>
+
+            <p style="text-align:justify;">PIHAK PERTAMA menyerahkan dan PIHAK KEDUA menerima hasil pengadaan barang/jasa berupa <span data-bind="desa.uraian"></span> sejumlah <span data-bind="desa.volume"></span>, sesuai Surat Perintah Kerja Nomor <span contenteditable="true" data-default-doc="doc14-ref-spk">006/SPK/TPK/2026</span> dan telah dinyatakan sesuai spesifikasi berdasarkan Berita Acara Pemeriksaan Nomor <span contenteditable="true" data-default-doc="doc14-ref-bap">007/BAP/TPK/2026</span>, dengan nilai pekerjaan sebesar <b data-bind="nego.nilai_formatted"></b> (<span data-bind="nego.nilai_terbilang"></span> rupiah).</p>
+
+            <p style="text-align:justify;">Dengan ditandatanganinya Berita Acara Serah Terima ini, maka tanggung jawab atas barang/pekerjaan tersebut beralih dari PIHAK PERTAMA kepada PIHAK KEDUA untuk selanjutnya dikelola dan dimanfaatkan sesuai peruntukannya.</p>
+
+            <p style="text-align:justify;">Demikian Berita Acara Serah Terima Barang/Pekerjaan ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya.</p>
+
+            <p style="margin-top:1.2rem;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc14-tanggal2">.....................</span></p>
+
+            <table style="width:100%; margin-top:1.2rem;"><tr>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK KEDUA,<br>Ketua TPK (Penerima)<br><br><br><br><span class="sig-name" data-bind="tpk.ketua_nama"></span></div>
+              </td>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK PERTAMA,<br><span data-bind="winner.nama_toko"></span> (Penyedia)<br><br><br><br><span class="sig-name" data-bind="winner.nama_pemilik"></span></div>
+              </td>
+            </tr></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 15. BA PENYERAHAN PENYELESAIAN PEKERJAAN KE KADES    -->
+      <!-- =================================================== -->
+      <div id="tab-doc15" class="tab-panel doc-tab hidden">
+        <div class="no-print flex items-center justify-between px-6 pt-5 pb-2 max-w-[900px] mx-auto">
+          <div>
+            <h2 class="font-bold text-[16px] text-[#0F2A4A]">15. BA Penyerahan Hasil Pekerjaan ke Kades</h2>
+            <p class="text-[12px] text-[#8592A8]">Penyerahan akhir hasil pengadaan dari TPK kepada Kepala Desa</p>
+          </div>
+          <button class="btn btn-gold" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak Dokumen</button>
+        </div>
+        <div class="paper-wrap">
+          <div class="doc-page">
+            <div class="kop">
+              <img class="kop-logo hidden" src="" alt="Logo Kabupaten">
+              <div class="kop-text">
+                <div class="provinsi">PEMERINTAH KABUPATEN <span data-bind="desa.kabupaten_upper"></span></div>
+                <div style="font-size:11.5pt;">KECAMATAN <span data-bind="desa.kecamatan_upper"></span></div>
+                <div class="desa">DESA <span data-bind="desa.nama_desa_upper"></span></div>
+                <div class="alamat">Tim Pengelola Kegiatan (TPK) — Kantor Kepala Desa <span data-bind="desa.nama_desa"></span>, Kec. <span data-bind="desa.kecamatan"></span>, Kab. <span data-bind="desa.kabupaten"></span></div>
+              </div>
+            </div>
+
+            <div class="doc-title">BERITA ACARA SERAH TERIMA PENYELESAIAN PEKERJAAN</div>
+            <div style="text-align:center; font-size:11pt; margin-top:-.4rem; margin-bottom:.6rem;">(Tim Pengelola Kegiatan kepada Kepala Desa)</div>
+            <div class="doc-nomor">Nomor: <span contenteditable="true" data-default-doc="doc15-nomor">009/BAST-P/TPK/2026</span></div>
+
+            <p style="text-align:justify;">Pada hari ini <span contenteditable="true" data-default-doc="doc15-hari">.....................</span>, tanggal <span contenteditable="true" data-default-doc="doc15-tanggal">.....................</span>, kami yang bertanda tangan di bawah ini:</p>
+
+            <table style="width:100%; font-size:12pt; margin:.6rem 0;">
+              <tr><td style="width:1.4rem; vertical-align:top;">I.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="tpk.ketua_nama"></b><br>
+                Jabatan&nbsp;: Ketua Tim Pengelola Kegiatan (TPK) Desa <span data-bind="desa.nama_desa"></span><br>
+                Selanjutnya disebut <b>PIHAK PERTAMA</b> (Yang Menyerahkan).
+              </td></tr>
+            </table>
+            <table style="width:100%; font-size:12pt; margin:.6rem 0 1rem;">
+              <tr><td style="width:1.4rem; vertical-align:top;">II.</td><td style="vertical-align:top;">
+                Nama&nbsp;&nbsp;&nbsp;&nbsp;: <b data-bind="desa.nama_kades"></b><br>
+                Jabatan&nbsp;: Kepala Desa <span data-bind="desa.nama_desa"></span><br>
+                Selanjutnya disebut <b>PIHAK KEDUA</b> (Yang Menerima).
+              </td></tr>
+            </table>
+
+            <p style="text-align:justify;">PIHAK PERTAMA menyerahkan dan PIHAK KEDUA menerima hasil pelaksanaan kegiatan <b data-bind="desa.nama_kegiatan"></b> Tahun Anggaran <b data-bind="desa.tahun"></b>, berupa <span data-bind="desa.uraian"></span> sejumlah <span data-bind="desa.volume"></span>, yang telah dilaksanakan oleh <span data-bind="winner.nama_toko"></span> dengan nilai sebesar <b data-bind="nego.nilai_formatted"></b> (<span data-bind="nego.nilai_terbilang"></span> rupiah), dan telah melalui proses pemeriksaan serta serah terima barang dari penyedia kepada Tim Pengelola Kegiatan.</p>
+
+            <p style="text-align:justify;">Dengan ditandatanganinya Berita Acara ini, pengelolaan dan pemanfaatan hasil kegiatan sepenuhnya menjadi tanggung jawab Pemerintah Desa <span data-bind="desa.nama_desa"></span>, dan proses pengadaan barang/jasa untuk kegiatan dimaksud dinyatakan <b>SELESAI</b>.</p>
+
+            <p style="text-align:justify;">Demikian Berita Acara Serah Terima Penyelesaian Pekerjaan ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya.</p>
+
+            <p style="margin-top:1.2rem;"><span data-bind="desa.nama_desa"></span>, <span contenteditable="true" data-default-doc="doc15-tanggal2">.....................</span></p>
+
+            <table style="width:100%; margin-top:1.2rem;"><tr>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK KEDUA,<br>Kepala Desa <span data-bind="desa.nama_desa"></span><br><br><br><br><span class="sig-name" data-bind="desa.nama_kades"></span></div>
+              </td>
+              <td style="width:50%; text-align:center;">
+                <div class="sig-box">PIHAK PERTAMA,<br>Ketua Tim Pengelola Kegiatan<br><br><br><br><span class="sig-name" data-bind="tpk.ketua_nama"></span></div>
+              </td>
+            </tr></table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   STATE
+===================================================================== */
+let state = {
+  desa: {
+    nama_desa: '', kecamatan: '', kabupaten: 'Lampung Timur', provinsi: 'Lampung',
+    nama_kegiatan: '', uraian: '', volume: '', pagu: 0, tahun: new Date().getFullYear(),
+    sumber_dana: 'Dana Desa', nama_kades: '', jangka_waktu: '', logo: ''
+  },
+  tpk: [],
+  items: [],
+  supplierA: { nama_toko: '', nama_pemilik: '', alamat: '', no_hp: '', bidang_usaha: '', no_izin_usaha: '', npwp: '', total: 0, rincian: [] },
+  supplierB: { nama_toko: '', nama_pemilik: '', alamat: '', no_hp: '', bidang_usaha: '', no_izin_usaha: '', npwp: '', total: 0, rincian: [] },
+  nego: { nilai: 0 }
+};
+const PLACEHOLDER = '.....................';
+
+/* =====================================================================
+   HELPERS
+===================================================================== */
+function getPath(obj, path){
+  return path.split('.').reduce((o,k)=> (o===null||o===undefined?undefined:o[k]), obj);
+}
+function setPath(obj, path, value){
+  const keys = path.split('.');
+  let o = obj;
+  for(let i=0;i<keys.length-1;i++){
+    if(o[keys[i]] === undefined || o[keys[i]] === null) o[keys[i]] = {};
+    o = o[keys[i]];
+  }
+  o[keys[keys.length-1]] = value;
+}
+function escapeHtml(str){
+  return String(str===undefined||str===null?'':str).replace(/[&<>"']/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+function formatRupiah(n){
+  n = Math.round(Number(n) || 0);
+  return 'Rp ' + n.toLocaleString('id-ID');
+}
+function parseRupiahInput(str){
+  if(!str) return 0;
+  const digits = String(str).replace(/[^0-9]/g,'');
+  return digits ? parseInt(digits,10) : 0;
+}
+function formatCurrencyInputLive(el){
+  const raw = parseRupiahInput(el.value);
+  el.value = raw ? raw.toLocaleString('id-ID') : '';
+}
+
+/* Terbilang: convert an integer to Indonesian words (public-domain algorithm) */
+function terbilang(n){
+  n = Math.floor(Math.abs(Number(n) || 0));
+  if (n === 0) return 'nol';
+  const satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+  function toWords(num){
+    num = Math.floor(num);
+    if (num < 12) return satuan[num];
+    if (num < 20) return toWords(num - 10) + ' belas';
+    if (num < 100) return toWords(Math.floor(num / 10)) + ' puluh' + (num % 10 !== 0 ? ' ' + toWords(num % 10) : '');
+    if (num < 200) return 'seratus' + (num % 100 !== 0 ? ' ' + toWords(num % 100) : '');
+    if (num < 1000) return toWords(Math.floor(num / 100)) + ' ratus' + (num % 100 !== 0 ? ' ' + toWords(num % 100) : '');
+    if (num < 2000) return 'seribu' + (num % 1000 !== 0 ? ' ' + toWords(num % 1000) : '');
+    if (num < 1000000) return toWords(Math.floor(num / 1000)) + ' ribu' + (num % 1000 !== 0 ? ' ' + toWords(num % 1000) : '');
+    if (num < 1000000000) return toWords(Math.floor(num / 1000000)) + ' juta' + (num % 1000000 !== 0 ? ' ' + toWords(num % 1000000) : '');
+    if (num < 1000000000000) return toWords(Math.floor(num / 1000000000)) + ' miliar' + (num % 1000000000 !== 0 ? ' ' + toWords(num % 1000000000) : '');
+    return toWords(Math.floor(num / 1000000000000)) + ' triliun' + (num % 1000000000000 !== 0 ? ' ' + toWords(num % 1000000000000) : '');
+  }
+  return toWords(n).trim();
+}
+
+/* =====================================================================
+   TPK TABLE (dashboard, editable)
+===================================================================== */
+function tpkRowHtml(member, idx){
+  member = member || {nama:'', jabatan:'Anggota'};
+  const jab = member.jabatan || 'Anggota';
+  return `<tr>
+    <td>${idx+1}</td>
+    <td><input type="text" class="input tpk-nama" value="${escapeHtml(member.nama)}" placeholder="Nama lengkap"></td>
+    <td><select class="input select tpk-jabatan">
+      <option value="Ketua" ${jab==='Ketua'?'selected':''}>Ketua</option>
+      <option value="Sekretaris" ${jab==='Sekretaris'?'selected':''}>Sekretaris</option>
+      <option value="Anggota" ${jab==='Anggota'?'selected':''}>Anggota</option>
+    </select></td>
+    <td><button type="button" class="btn-danger-ghost" onclick="removeTpkRow(this)" title="Hapus baris">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+    </button></td>
+  </tr>`;
+}
+function renumberTpkRows(){
+  document.querySelectorAll('#tpk-tbody tr').forEach((tr,i)=>{ tr.children[0].textContent = i+1; });
+}
+function addTpkRow(){
+  const tbody = document.getElementById('tpk-tbody');
+  tbody.insertAdjacentHTML('beforeend', tpkRowHtml({nama:'',jabatan:'Anggota'}, tbody.children.length));
+  renumberTpkRows();
+  syncTpkFromDom();
+  refreshDocuments();
+}
+function removeTpkRow(btn){
+  const tr = btn.closest('tr');
+  const tbody = tr.parentNode;
+  if(tbody.children.length <= 1){ return; } // keep at least one row
+  tbody.removeChild(tr);
+  renumberTpkRows();
+  syncTpkFromDom();
+  refreshDocuments();
+}
+function initTpkRows(){
+  const tbody = document.getElementById('tpk-tbody');
+  const defaults = [{nama:'',jabatan:'Ketua'},{nama:'',jabatan:'Sekretaris'},{nama:'',jabatan:'Anggota'}];
+  tbody.innerHTML = defaults.map((m,i)=>tpkRowHtml(m,i)).join('');
+  syncTpkFromDom();
+}
+function syncTpkFromDom(){
+  const rows = document.querySelectorAll('#tpk-tbody tr');
+  const arr = [];
+  rows.forEach(r=>{
+    const namaEl = r.querySelector('.tpk-nama');
+    const jabEl = r.querySelector('.tpk-jabatan');
+    arr.push({ nama: namaEl ? namaEl.value : '', jabatan: jabEl ? jabEl.value : 'Anggota' });
+  });
+  state.tpk = arr;
+}
+
+/* =====================================================================
+   DAFTAR SPESIFIKASI BARANG/JASA (dashboard, editable) — dipakai Berkas 3
+===================================================================== */
+function itemRowHtml(item, idx){
+  item = item || {nama:'', spek:'', volume:''};
+  return `<tr>
+    <td>${idx+1}</td>
+    <td><input type="text" class="mini-input item-nama" value="${escapeHtml(item.nama)}" placeholder="cth. Semen"></td>
+    <td><input type="text" class="mini-input item-spek" value="${escapeHtml(item.spek)}" placeholder="cth. 40kg, SNI"></td>
+    <td><input type="text" class="mini-input item-volume" value="${escapeHtml(item.volume)}" placeholder="cth. 50 sak"></td>
+    <td><button type="button" class="btn-danger-ghost" onclick="removeItemRow(this)" title="Hapus baris">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+    </button></td>
+  </tr>`;
+}
+function renumberItemRows(){
+  document.querySelectorAll('#item-tbody tr').forEach((tr,i)=>{ tr.children[0].textContent = i+1; });
+}
+function addItemRow(){
+  const tbody = document.getElementById('item-tbody');
+  tbody.insertAdjacentHTML('beforeend', itemRowHtml({nama:'',spek:'',volume:''}, tbody.children.length));
+  renumberItemRows();
+  syncItemsFromDom();
+  refreshDocuments();
+}
+function removeItemRow(btn){
+  const tr = btn.closest('tr');
+  const tbody = tr.parentNode;
+  tbody.removeChild(tr);
+  renumberItemRows();
+  syncItemsFromDom();
+  refreshDocuments();
+}
+function initItemRows(){
+  const tbody = document.getElementById('item-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  syncItemsFromDom();
+}
+function syncItemsFromDom(){
+  const rows = document.querySelectorAll('#item-tbody tr');
+  const arr = [];
+  rows.forEach(r=>{
+    arr.push({
+      nama: r.querySelector('.item-nama') ? r.querySelector('.item-nama').value : '',
+      spek: r.querySelector('.item-spek') ? r.querySelector('.item-spek').value : '',
+      volume: r.querySelector('.item-volume') ? r.querySelector('.item-volume').value : ''
+    });
+  });
+  state.items = arr;
+}
+
+/* =====================================================================
+   RINCIAN HARGA PENAWARAN PER SUPPLIER (dashboard, editable) — Berkas 5
+===================================================================== */
+function rincianRowHtml(key, item, idx){
+  item = item || {nama:'', volume:'', harga_satuan:0, jumlah:0};
+  const hs = Number(item.harga_satuan)||0;
+  const jm = Number(item.jumlah)||0;
+  return `<tr>
+    <td>${idx+1}</td>
+    <td><input type="text" class="mini-input rin-nama" value="${escapeHtml(item.nama)}" placeholder="Nama barang"></td>
+    <td><input type="text" class="mini-input rin-volume" value="${escapeHtml(item.volume)}" placeholder="cth. 50 sak"></td>
+    <td><input type="text" inputmode="numeric" class="mini-input rin-harga currency-input" value="${hs? hs.toLocaleString('id-ID'):''}" placeholder="0"></td>
+    <td><input type="text" inputmode="numeric" class="mini-input rin-jumlah currency-input" value="${jm? jm.toLocaleString('id-ID'):''}" placeholder="0"></td>
+    <td><button type="button" class="btn-danger-ghost" onclick="removeRincianRow('${key}', this)" title="Hapus baris">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+    </button></td>
+  </tr>`;
+}
+function renumberRincianRows(key){
+  document.querySelectorAll('#rincian-tbody-'+key+' tr').forEach((tr,i)=>{ tr.children[0].textContent = i+1; });
+}
+function addRincianRow(key){
+  const tbody = document.getElementById('rincian-tbody-'+key);
+  tbody.insertAdjacentHTML('beforeend', rincianRowHtml(key, {nama:'',volume:'',harga_satuan:0,jumlah:0}, tbody.children.length));
+  renumberRincianRows(key);
+  syncRincianFromDom(key);
+  refreshDocuments();
+}
+function removeRincianRow(key, btn){
+  const tr = btn.closest('tr');
+  const tbody = tr.parentNode;
+  tbody.removeChild(tr);
+  renumberRincianRows(key);
+  syncRincianFromDom(key);
+  refreshDocuments();
+}
+function initRincianRows(key){
+  const tbody = document.getElementById('rincian-tbody-'+key);
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  syncRincianFromDom(key);
+}
+function syncRincianFromDom(key){
+  const rows = document.querySelectorAll('#rincian-tbody-'+key+' tr');
+  const arr = [];
+  rows.forEach(r=>{
+    arr.push({
+      nama: r.querySelector('.rin-nama') ? r.querySelector('.rin-nama').value : '',
+      volume: r.querySelector('.rin-volume') ? r.querySelector('.rin-volume').value : '',
+      harga_satuan: r.querySelector('.rin-harga') ? parseRupiahInput(r.querySelector('.rin-harga').value) : 0,
+      jumlah: r.querySelector('.rin-jumlah') ? parseRupiahInput(r.querySelector('.rin-jumlah').value) : 0
+    });
+  });
+  if(key === 'A') state.supplierA.rincian = arr; else state.supplierB.rincian = arr;
+}
+/* =====================================================================
+   INPUT SYNC (dashboard -> state)
+===================================================================== */
+function populateInputsFromState(){
+  document.querySelectorAll('[data-model]').forEach(el=>{
+    const path = el.getAttribute('data-model');
+    const val = getPath(state, path);
+    if(val === undefined || val === null) return;
+    if(el.classList.contains('currency-input')){
+      el.value = Number(val) ? Number(val).toLocaleString('id-ID') : '';
+    } else {
+      el.value = val;
+    }
+  });
+}
+function syncModelInputs(){
+  document.querySelectorAll('[data-model]').forEach(el=>{
+    const path = el.getAttribute('data-model');
+    let val = el.value;
+    if(el.classList.contains('currency-input')){
+      val = parseRupiahInput(val);
+    }
+    setPath(state, path, val);
+  });
+}
+function onDashboardChange(e){
+  const el = e.target;
+  if(el && el.classList && el.classList.contains('currency-input')){
+    formatCurrencyInputLive(el);
+  }
+  syncModelInputs();
+  syncTpkFromDom();
+  syncItemsFromDom();
+  syncRincianFromDom('A');
+  syncRincianFromDom('B');
+  refreshDocuments();
+}
+
+/* =====================================================================
+   WINNER LOGIC
+===================================================================== */
+function computeRincianSum(rincianArr){
+  return (rincianArr || []).reduce((sum, it) => sum + (Number(it.jumlah) || 0), 0);
+}
+function effectiveTotal(supplierObj){
+  const sum = computeRincianSum(supplierObj.rincian);
+  return sum > 0 ? sum : (Number(supplierObj.total) || 0);
+}
+function computeWinnerLabel(){
+  const a = effectiveTotal(state.supplierA);
+  const b = effectiveTotal(state.supplierB);
+  if(a > 0 && b > 0) return a <= b ? 'A' : 'B';
+  return null;
+}
+
+/* =====================================================================
+   LOGO UPLOAD
+===================================================================== */
+function handleLogoUpload(inputEl){
+  const file = inputEl.files && inputEl.files[0];
+  if(!file) return;
+  if(!file.type || !file.type.startsWith('image/')){
+    alert('Berkas harus berupa gambar (PNG, JPG, atau SVG).');
+    inputEl.value = '';
+    return;
+  }
+  if(file.size > 3 * 1024 * 1024){
+    alert('Ukuran berkas terlalu besar. Gunakan gambar di bawah 3MB.');
+    inputEl.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    state.desa.logo = e.target.result;
+    updateLogoPreview();
+    applyLogoImages();
+  };
+  reader.onerror = function(){
+    alert('Gagal membaca berkas gambar. Silakan coba berkas lain.');
+  };
+  reader.readAsDataURL(file);
+}
+function removeLogo(){
+  state.desa.logo = '';
+  const input = document.getElementById('logo-file-input');
+  if(input) input.value = '';
+  updateLogoPreview();
+  applyLogoImages();
+}
+function updateLogoPreview(){
+  const preview = document.getElementById('logo-preview');
+  const placeholder = document.getElementById('logo-preview-placeholder');
+  const removeBtn = document.getElementById('logo-remove-btn');
+  if(!preview) return;
+  if(state.desa.logo){
+    preview.src = state.desa.logo;
+    preview.classList.remove('hidden');
+    if(placeholder) placeholder.classList.add('hidden');
+    if(removeBtn) removeBtn.classList.remove('hidden');
+  } else {
+    preview.src = '';
+    preview.classList.add('hidden');
+    if(placeholder) placeholder.classList.remove('hidden');
+    if(removeBtn) removeBtn.classList.add('hidden');
+  }
+}
+function applyLogoImages(){
+  document.querySelectorAll('.kop-logo').forEach(img=>{
+    if(state.desa.logo){
+      img.src = state.desa.logo;
+      img.classList.remove('hidden');
+    } else {
+      img.src = '';
+      img.classList.add('hidden');
+    }
+  });
+}
+
+/* =====================================================================
+   MASTER REFRESH: compute derived fields + render everything
+===================================================================== */
+function refreshDocuments(){
+  // Uppercase kop-surat fields
+  state.desa.kabupaten_upper = (state.desa.kabupaten || '').toUpperCase();
+  state.desa.kecamatan_upper = (state.desa.kecamatan || '').toUpperCase();
+  state.desa.nama_desa_upper = (state.desa.nama_desa || '').toUpperCase();
+
+  // Formatted / terbilang
+  state.desa.pagu_formatted = formatRupiah(state.desa.pagu);
+  state.desa.pagu_terbilang = terbilang(state.desa.pagu || 0);
+  state.desa.jangka_waktu_terbilang = terbilang(Number(state.desa.jangka_waktu) || 0);
+
+  // Total efektif: terisi dari jumlah Rincian Harga (jika diisi), atau dari input Total manual
+  state.supplierA.total = effectiveTotal(state.supplierA);
+  state.supplierB.total = effectiveTotal(state.supplierB);
+  syncEffectiveTotalIntoInput('A');
+  syncEffectiveTotalIntoInput('B');
+
+  state.supplierA.total_formatted = formatRupiah(state.supplierA.total);
+  state.supplierA.total_terbilang = terbilang(state.supplierA.total || 0);
+  state.supplierB.total_formatted = formatRupiah(state.supplierB.total);
+  state.supplierB.total_terbilang = terbilang(state.supplierB.total || 0);
+
+  const winLabel = computeWinnerLabel();
+  const winObj = winLabel === 'A' ? state.supplierA : (winLabel === 'B' ? state.supplierB : null);
+  state.winner = winObj ? {
+    label: winLabel,
+    nama_toko: winObj.nama_toko, nama_pemilik: winObj.nama_pemilik, alamat: winObj.alamat,
+    total: winObj.total, total_formatted: winObj.total_formatted, total_terbilang: winObj.total_terbilang
+  } : { label: '', nama_toko: '', nama_pemilik: '', alamat: '', total: 0, total_formatted: formatRupiah(0), total_terbilang: terbilang(0) };
+
+  const negoRaw = Number(state.nego.nilai) || 0;
+  const negoVal = negoRaw > 0 ? negoRaw : (state.winner.total || 0);
+  state.nego.nilai_formatted = formatRupiah(negoVal);
+  state.nego.nilai_terbilang = terbilang(negoVal);
+
+  const ketua = state.tpk.find(t => (t.jabatan||'').toLowerCase() === 'ketua') || state.tpk[0] || {nama:''};
+  state.tpk.ketua_nama = ketua.nama || '';
+
+  applyBindings();
+  applyLogoImages();
+  renderComparisonTable();
+  renderWinnerBanner(winLabel);
+  applyWinnerHighlights(winLabel);
+  renderTpkSignatureBlocks();
+  renderPaguClause();
+  updateTopbarChip(winLabel);
+  renderItemsIntoDocs();
+  renderRincianIntoDocs('A');
+  renderRincianIntoDocs('B');
+  renderSkTpkTable();
+  renderDaftarHadir();
+  renderPemeriksaanList(winLabel);
+}
+
+function syncEffectiveTotalIntoInput(key){
+  const supplier = key === 'A' ? state.supplierA : state.supplierB;
+  if(!supplier.rincian || !supplier.rincian.length) return; // mode manual: biarkan input apa adanya
+  const input = document.querySelector('[data-model="supplier' + key + '.total"]');
+  if(!input || document.activeElement === input) return;
+  input.value = supplier.total ? supplier.total.toLocaleString('id-ID') : '';
+}
+
+function applyBindings(){
+  document.querySelectorAll('[data-bind]').forEach(el=>{
+    const path = el.getAttribute('data-bind');
+    const val = getPath(state, path);
+    el.textContent = (val === undefined || val === null || val === '') ? PLACEHOLDER : val;
+  });
+}
+
+function renderComparisonTable(){
+  const tbody = document.getElementById('dash-comparison-body');
+  if(!tbody) return;
+  const a = state.supplierA, b = state.supplierB;
+  const winLabel = computeWinnerLabel();
+  const rows = [
+    ['Nama Toko/Penyedia', a.nama_toko || '-', b.nama_toko || '-'],
+    ['Nama Pemilik', a.nama_pemilik || '-', b.nama_pemilik || '-'],
+    ['Alamat', a.alamat || '-', b.alamat || '-'],
+    ['Total Nilai Penawaran', formatRupiah(a.total), formatRupiah(b.total)]
+  ];
+  tbody.innerHTML = rows.map(r=>{
+    const clsA = winLabel === 'A' ? 'font-bold text-[var(--win)]' : '';
+    const clsB = winLabel === 'B' ? 'font-bold text-[var(--win)]' : '';
+    return `<tr><td>${escapeHtml(r[0])}</td><td class="${clsA}">${escapeHtml(r[1])}</td><td class="${clsB}">${escapeHtml(r[2])}</td></tr>`;
+  }).join('');
+}
+
+function renderWinnerBanner(winLabel){
+  const el = document.getElementById('winner-banner');
+  const badgeA = document.getElementById('badge-a');
+  const badgeB = document.getElementById('badge-b');
+  if(!el) return;
+  if(!winLabel){
+    el.className = 'rounded-lg border border-dashed border-[var(--line)] px-4 py-3 text-[13px] text-[#8592A8] text-center';
+    el.textContent = 'Lengkapi total nilai penawaran kedua calon penyedia untuk melihat penetapan pemenang secara otomatis.';
+    if(badgeA){ badgeA.textContent = 'Menunggu Data'; badgeA.className = 'chip chip-lose'; }
+    if(badgeB){ badgeB.textContent = 'Menunggu Data'; badgeB.className = 'chip chip-lose'; }
+    return;
+  }
+  const winner = winLabel === 'A' ? state.supplierA : state.supplierB;
+  const loser = winLabel === 'A' ? state.supplierB : state.supplierA;
+  const selisih = Math.abs((winner.total || 0) - (loser.total || 0));
+  el.className = 'rounded-lg border border-[#BFE3CD] bg-[#EAF7EF] px-4 py-3 text-[13.5px] text-[#155D3A] text-center';
+  el.innerHTML = `<b>Pemenang: ${escapeHtml(winner.nama_toko || ('Calon Penyedia ' + winLabel))}</b> dengan total penawaran ${formatRupiah(winner.total)} — lebih hemat ${formatRupiah(selisih)} dibanding calon penyedia lainnya.`;
+  if(badgeA){ badgeA.textContent = winLabel === 'A' ? 'PEMENANG' : 'Tidak Terpilih'; badgeA.className = 'chip ' + (winLabel === 'A' ? 'chip-win' : 'chip-lose'); }
+  if(badgeB){ badgeB.textContent = winLabel === 'B' ? 'PEMENANG' : 'Tidak Terpilih'; badgeB.className = 'chip ' + (winLabel === 'B' ? 'chip-win' : 'chip-lose'); }
+}
+
+function applyWinnerHighlights(winLabel){
+  document.querySelectorAll('[data-winner-highlight]').forEach(el=>{
+    const which = el.getAttribute('data-winner-highlight');
+    if(winLabel && which === winLabel){ el.style.background = '#EAF7EF'; el.style.color = '#155D3A'; }
+    else { el.style.background = ''; el.style.color = ''; }
+  });
+  document.querySelectorAll('[data-winner-badge]').forEach(el=>{
+    const which = el.getAttribute('data-winner-badge');
+    if(winLabel && which === winLabel){ el.textContent = 'PEMENANG'; el.style.color = '#155D3A'; el.style.fontWeight = '800'; }
+    else { el.textContent = winLabel ? '-' : ''; el.style.color = ''; el.style.fontWeight = ''; }
+  });
+}
+
+function updateTopbarChip(winLabel){
+  const chip = document.getElementById('winner-chip-topbar');
+  if(!chip) return;
+  if(!winLabel){ chip.classList.add('hidden'); return; }
+  chip.classList.remove('hidden');
+  const w = winLabel === 'A' ? state.supplierA : state.supplierB;
+  chip.textContent = 'Pemenang: ' + (w.nama_toko || ('Penyedia ' + winLabel));
+}
+
+function renderPaguClause(){
+  const el = document.getElementById('doc10-pagu-clause');
+  if(!el) return;
+  const pagu = Number(state.desa.pagu) || 0;
+  if(pagu > 0){
+    el.style.display = '';
+    el.textContent = `Nilai penawaran terendah tersebut masih berada dalam batas Pagu Anggaran/HPS kegiatan sebesar ${formatRupiah(pagu)} (${terbilang(pagu)} rupiah), sehingga dinilai wajar dan dapat dipertanggungjawabkan.`;
+  } else {
+    el.style.display = 'none';
+    el.textContent = '';
+  }
+}
+
+function tpkSigBoxHtml(member){
+  return `<div class="sig-box" style="font-size:11pt;">${escapeHtml(member.jabatan || 'Anggota')}<br><br><br><br><span class="sig-name">${member.nama ? escapeHtml(member.nama) : '( ................................. )'}</span></div>`;
+}
+function renderTpkSignatureBlocks(){
+  const all = (state.tpk && state.tpk.length) ? state.tpk : [{nama:'',jabatan:'Ketua'},{nama:'',jabatan:'Sekretaris'},{nama:'',jabatan:'Anggota'}];
+  // Berkas 12 (BA Pemeriksaan): seluruh anggota TPK selaku Tim Pemeriksa
+  const doc12 = document.getElementById('sig-tpk-doc12');
+  if(doc12) doc12.innerHTML = all.map(tpkSigBoxHtml).join('');
+  // Berkas 10 (BA Klarifikasi & Negosiasi): anggota TPK selain Ketua, sebagai saksi
+  const doc10 = document.getElementById('sig-tpk-doc10');
+  if(doc10){
+    const ketuaIdx = all.findIndex(t => (t.jabatan||'').toLowerCase() === 'ketua');
+    const rest = all.filter((t,i)=> i !== ketuaIdx);
+    doc10.innerHTML = rest.length ? rest.map(tpkSigBoxHtml).join('') : '<p style="font-size:11pt; font-style:italic;">-</p>';
+  }
+}
+
+/* =====================================================================
+   RENDER: Susunan TPK pada SK (Berkas 1)
+===================================================================== */
+function renderSkTpkTable(){
+  const tbody = document.getElementById('sk-tpk-tbody');
+  if(!tbody) return;
+  const all = (state.tpk && state.tpk.length) ? state.tpk : [{nama:'',jabatan:'Ketua'},{nama:'',jabatan:'Sekretaris'},{nama:'',jabatan:'Anggota'}];
+  tbody.innerHTML = all.map((m,i)=> `<tr><td class="num">${i+1}</td><td>${m.nama ? escapeHtml(m.nama) : PLACEHOLDER}</td><td>${escapeHtml(m.jabatan || 'Anggota')}</td></tr>`).join('');
+}
+
+/* =====================================================================
+   RENDER: Daftar Spesifikasi Barang/Jasa ke Lampiran (Berkas 3)
+===================================================================== */
+function specRowsHtml(items){
+  const list = (items && items.length) ? items : [{nama: state.desa.uraian || '-', spek: '-', volume: state.desa.volume || '-'}];
+  return list.map((it,i)=> `<tr><td class="num">${i+1}</td><td>${escapeHtml(it.nama || '-')}</td><td>${escapeHtml(it.spek || '-')}</td><td class="num">${escapeHtml(it.volume || '-')}</td></tr>`).join('');
+}
+function renderItemsIntoDocs(){
+  const html = specRowsHtml(state.items);
+  const a = document.getElementById('lampiran-spek-tbody-A'); if(a) a.innerHTML = html;
+  const b = document.getElementById('lampiran-spek-tbody-B'); if(b) b.innerHTML = html;
+}
+
+/* =====================================================================
+   RENDER: Rincian Harga Penawaran ke Lampiran (Berkas 5) + pill dashboard
+===================================================================== */
+function rincianRowsHtml(rincian, fallbackTotal){
+  if(rincian && rincian.length){
+    return rincian.map((it,i)=> `<tr><td class="num">${i+1}</td><td>${escapeHtml(it.nama || '-')}</td><td class="num">${escapeHtml(it.volume || '-')}</td><td class="money">${formatRupiah(it.harga_satuan)}</td><td class="money">${formatRupiah(it.jumlah)}</td></tr>`).join('');
+  }
+  return `<tr><td class="num">1</td><td>${escapeHtml(state.desa.uraian || '-')}</td><td class="num">${escapeHtml(state.desa.volume || '-')}</td><td class="money">-</td><td class="money">${formatRupiah(fallbackTotal)}</td></tr>`;
+}
+function renderRincianIntoDocs(key){
+  const supplier = key === 'A' ? state.supplierA : state.supplierB;
+  const sum = computeRincianSum(supplier.rincian);
+  const total = sum > 0 ? sum : (Number(supplier.total) || 0);
+  const tbody = document.getElementById('lampiran-rincian-tbody-' + key);
+  if(tbody) tbody.innerHTML = rincianRowsHtml(supplier.rincian, total);
+  const totalCell = document.getElementById('lampiran-rincian-total-' + key);
+  if(totalCell) totalCell.textContent = formatRupiah(total);
+  const pill = document.getElementById('rincian-total-' + key);
+  if(pill) pill.textContent = 'Total Rincian: ' + formatRupiah(sum);
+}
+
+/* =====================================================================
+   RENDER: Daftar Hadir Klarifikasi & Negosiasi (Berkas 9)
+===================================================================== */
+function renderDaftarHadir(){
+  const tbody = document.getElementById('daftar-hadir-tbody');
+  if(!tbody) return;
+  const all = (state.tpk && state.tpk.length) ? state.tpk : [{nama:'',jabatan:'Ketua'},{nama:'',jabatan:'Sekretaris'},{nama:'',jabatan:'Anggota'}];
+  const rows = all.map(t => ({ nama: t.nama, unsur: (t.jabatan || 'Anggota') + ' TPK' }));
+  if(state.winner && state.winner.nama_pemilik){
+    rows.push({ nama: state.winner.nama_pemilik, unsur: 'Penyedia Barang/Jasa (' + (state.winner.nama_toko || '-') + ')' });
+  } else {
+    rows.push({ nama: '', unsur: 'Penyedia Barang/Jasa' });
+  }
+  rows.push({ nama: '', unsur: '' });
+  rows.push({ nama: '', unsur: '' });
+  tbody.innerHTML = rows.map((r,i)=> `<tr><td class="num">${i+1}</td><td>${r.nama ? escapeHtml(r.nama) : '&nbsp;'}</td><td>${r.unsur ? escapeHtml(r.unsur) : '&nbsp;'}</td><td>&nbsp;</td></tr>`).join('');
+}
+
+/* =====================================================================
+   RENDER: Lampiran Rincian Barang/Pekerjaan Diperiksa (Berkas 13)
+===================================================================== */
+function renderPemeriksaanList(winLabel){
+  const tbody = document.getElementById('pemeriksaan-tbody');
+  if(!tbody) return;
+  const rincian = winLabel === 'A' ? state.supplierA.rincian : (winLabel === 'B' ? state.supplierB.rincian : []);
+  const list = (rincian && rincian.length) ? rincian : [{ nama: state.desa.uraian || '-', volume: state.desa.volume || '-' }];
+  tbody.innerHTML = list.map((it,i)=> `<tr><td class="num">${i+1}</td><td>${escapeHtml(it.nama || '-')}</td><td class="num">${escapeHtml(it.volume || '-')}</td><td contenteditable="true" style="color:#1F7A4D; font-weight:700;">Sesuai Spesifikasi</td><td contenteditable="true">&nbsp;</td></tr>`).join('');
+}
+
+/* =====================================================================
+   TABS
+===================================================================== */
+const TAB_TITLES = {
+  dashboard: ['Dashboard Input Data', 'Lengkapi seluruh data untuk membangkitkan 15 berkas kelengkapan PBJ Desa secara otomatis'],
+  doc1: ['1. SK Kepala Desa — Tim Pengelola Kegiatan (TPK)', 'Dasar hukum pembentukan TPK Barang/Jasa Desa'],
+  doc2: ['2. Surat Penawaran dari TPK kepada Suplier', 'Surat permintaan penawaran harga, dikirim kepada 2 (dua) calon penyedia'],
+  doc3: ['3. Lampiran Surat Penawaran TPK', 'Rincian spesifikasi barang/jasa yang dicari — lampiran Berkas 2'],
+  doc4: ['4. Surat Balasan Penawaran dari Suplier', 'Diterbitkan oleh masing-masing calon penyedia untuk TPK'],
+  doc5: ['5. Daftar Rincian Penawaran Harga', 'Rincian harga per item dari masing-masing suplier — lampiran Berkas 4'],
+  doc6: ['6. Formulir Isian Data Suplier & Izin Usaha', 'Diisi dan dilengkapi oleh masing-masing calon penyedia'],
+  doc7: ['7. Pakta Integritas dari Suplier', 'Pernyataan anti korupsi, kolusi, dan nepotisme dari calon penyedia'],
+  doc8: ['8. Surat Undangan Klarifikasi & Negosiasi', 'Dikirim TPK kepada calon penyedia terpilih untuk hadir dalam rapat'],
+  doc9: ['9. Daftar Hadir Klarifikasi & Negosiasi', 'Daftar hadir peserta rapat klarifikasi teknis dan negosiasi harga'],
+  doc10: ['10. Berita Acara Klarifikasi & Negosiasi', 'Evaluasi penawaran, penetapan pemenang, dan hasil negosiasi harga'],
+  doc11: ['11. Surat Perintah Kerja (SPK)', 'Perikatan kerja/perjanjian kerja sama antara TPK Desa dengan penyedia terpilih'],
+  doc12: ['12. Berita Acara Pemeriksaan Barang/Pekerjaan', 'Pemeriksaan kesesuaian hasil pekerjaan/barang terhadap SPK'],
+  doc13: ['13. Lampiran Rincian Barang Diperiksa', 'Daftar rincian nama barang/pekerjaan yang diperiksa — lampiran Berkas 12'],
+  doc14: ['14. BAST Barang/Pekerjaan dari Suplier', 'Serah terima dari Penyedia kepada TPK Desa'],
+  doc15: ['15. BA Penyerahan Hasil Pekerjaan ke Kades', 'Penyerahan akhir hasil pengadaan dari TPK kepada Kepala Desa']
+};
+function showTab(id, navEl){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+  const target = document.getElementById('tab-' + id);
+  if(target) target.classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(navEl) navEl.classList.add('active');
+  const mobileSelect = document.getElementById('mobile-doc-select');
+  if(mobileSelect) mobileSelect.value = id;
+  const t = TAB_TITLES[id];
+  if(t){
+    document.getElementById('topbar-title').textContent = t[0];
+    document.getElementById('topbar-sub').textContent = t[1];
+  }
+  const scroller = document.getElementById('content-scroll');
+  if(scroller) scroller.scrollTop = 0;
+}
+
+function toggleMobileMenu(force){
+  const drawer = document.getElementById('mobile-drawer');
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  if(!drawer) return;
+  const shouldOpen = typeof force === 'boolean' ? force : !drawer.classList.contains('is-open');
+  drawer.classList.toggle('is-open', shouldOpen);
+  drawer.setAttribute('aria-hidden', String(!shouldOpen));
+  if(toggle) toggle.setAttribute('aria-expanded', String(shouldOpen));
+}
+function closeMobileMenu(event){
+  if(event.target === event.currentTarget) toggleMobileMenu(false);
+}
+function selectMobileDocument(id){
+  const navEl = document.querySelector('.sidebar .nav-item[data-tab="' + id + '"]');
+  showTab(id, navEl);
+  toggleMobileMenu(false);
+}
+
+/* =====================================================================
+   PRINT
+===================================================================== */
+function setPaperSize(val){
+  const styleEl = document.getElementById('dynamic-page-size');
+  if(val === 'F4'){
+    styleEl.textContent = '@page { size: 215mm 330mm; margin: 0; }';
+    document.body.classList.add('paper-f4');
+  } else {
+    styleEl.textContent = '@page { size: A4; margin: 0; }';
+    document.body.classList.remove('paper-f4');
+  }
+}
+function printAllDocuments(){
+  document.body.classList.add('print-all');
+  window.print();
+}
+window.addEventListener('afterprint', function(){
+  document.body.classList.remove('print-all');
+});
+
+/* =====================================================================
+   INIT
+===================================================================== */
+window.addEventListener('DOMContentLoaded', function(){
+  initTpkRows();
+  initItemRows();
+  initRincianRows('A');
+  initRincianRows('B');
+  populateInputsFromState();
+  syncModelInputs();
+  syncTpkFromDom();
+  syncItemsFromDom();
+  syncRincianFromDom('A');
+  syncRincianFromDom('B');
+  updateLogoPreview();
+  refreshDocuments();
+
+  const dash = document.getElementById('tab-dashboard');
+  dash.addEventListener('input', onDashboardChange);
+  dash.addEventListener('change', onDashboardChange);
+});
+</script>
+</body>
+</html>
